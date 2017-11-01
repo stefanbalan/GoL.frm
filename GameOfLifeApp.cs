@@ -9,7 +9,9 @@ using Configuration = GoL.frm.Infrastructure.Configuration;
 
 namespace GoL.frm
 {
-    public class GameOfLifeGraphicsApp : Direct2D1App //Direct2D1WinFormApp
+    public class GameOfLifeGraphicsApp :
+        Direct2D1App
+        //Direct2D1WinFormApp
     {
         private SolidColorBrush _solidColorBrush;
         private List<Position> _map = new List<Position>();
@@ -51,8 +53,8 @@ namespace GoL.frm
             const int cellSize = 10;
             RenderTarget2D.FillRoundedRectangle(new RoundedRectangle
             {
-                RadiusX = 1,
-                RadiusY = 1,
+                RadiusX = 2,
+                RadiusY = 2,
                 Rect = new RawRectangleF(
                     _offset.X + x * cellSize,
                     _offset.Y + y * cellSize,

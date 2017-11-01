@@ -65,5 +65,12 @@ namespace GoL.frm.Infrastructure
             RenderTarget2D.EndDraw();
             base.EndDraw();
         }
+
+        protected override void WindowResize(int width, int height)
+        {
+            base.WindowResize(width, height);
+
+            //RenderTarget2D.Resize(new Size2(width, height));
+        }
     }
 }

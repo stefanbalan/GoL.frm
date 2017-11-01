@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using GoL.frm.Infrastructure;
 
 namespace GoL.frm
 {

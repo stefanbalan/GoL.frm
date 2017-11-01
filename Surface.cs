@@ -6,7 +6,7 @@ using D2D1 = SharpDX.Direct2D1;
 
 namespace GoL.frm
 {
-    public class Surface : IDisposable
+    public class GameSurface : IDisposable
     {
         private RenderForm renderForm;
 
@@ -17,7 +17,7 @@ namespace GoL.frm
         private D2D1.DeviceContext d2dDeviceContext;
         private SwapChain swapChain;
 
-    public Surface() 
+        public GameSurface()
         {
             renderForm = new RenderForm("My first SharpDX game");
             renderForm.ClientSize = new Size(Width, Height);
@@ -49,12 +49,12 @@ namespace GoL.frm
                 IsWindowed = true
             };
 
-             //var device = new D2D1.Device();
-                /*.CreateWithSwapChain(DriverType.Hardware, D3D11.DeviceCreationFlags.None, swapChainDesc, out d3dDevice, out swapChain);*/
+            //var device = new D2D1.Device();
+            /*.CreateWithSwapChain(DriverType.Hardware, D3D11.DeviceCreationFlags.None, swapChainDesc, out d3dDevice, out swapChain);*/
             //d3dDeviceContext = d3dDevice.ImmediateContext;
         }
 
-        
+
 
         public void Dispose()
         {

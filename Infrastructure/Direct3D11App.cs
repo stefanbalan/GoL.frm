@@ -21,57 +21,61 @@
 using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
+using Device = SharpDX.Direct3D11.Device;
 using Resource = SharpDX.Direct3D11.Resource;
 
 namespace GoL.frm.Infrastructure
 {
     public class Direct3D11App : App
     {
-        private SharpDX.Direct3D11.Device _device;
-        private SwapChain _swapChain;
+        protected Device Device;
+        protected SwapChain SwapChain;
+        protected Texture2D BackBuffer;
+        protected RenderTargetView RenderView;
 
-        public SharpDX.Direct3D11.Device Device => _device;
-        public Texture2D BackBuffer { get; private set; }
-        public RenderTargetView BackBufferView { get; private set; }
+
+
 
         protected override void Initialize(Configuration configuration)
         {
-
             var desc = new SwapChainDescription
             {
                 BufferCount = 1,
-                ModeDescription =
-                    new ModeDescription(configuration.Width, configuration.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
+                //ModeDescription = new ModeDescription(configuration.Width, configuration.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
+                ModeDescription = new ModeDescription(0, 0, new Rational(60, 1), Format.R8G8B8A8_UNorm),
                 IsWindowed = true,
                 OutputHandle = DisplayHandle,
                 SampleDescription = new SampleDescription(1, 0),
                 SwapEffect = SwapEffect.Discard,
-                Usage = Usage.RenderTargetOutput
+                Usage = Usage.RenderTargetOutput | Usage.ShaderInput,
+                Flags = SwapChainFlags.None
             };
 
+            //SharpDX.Direct3D11.Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.BgraSupport, new[] { FeatureLevel.Level_10_0 }, desc, out _device, out _swapChain);
+            // above line is expanded to...
+            Device = new Device(DriverType.Hardware, DeviceCreationFlags.BgraSupport | DeviceCreationFlags.Debug, FeatureLevel.Level_10_0);
+            using (Factory1 factory1 = new Factory1())
+                SwapChain = new SwapChain(factory1, Device, desc);
+            // ...this!
 
-            SharpDX.Direct3D11.Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.BgraSupport, new[] { FeatureLevel.Level_10_0 }, desc, out _device, out _swapChain);
-
-            var factory = _swapChain.GetParent<Factory>();
+            var factory = SwapChain.GetParent<Factory>();
             factory.MakeWindowAssociation(DisplayHandle, WindowAssociationFlags.IgnoreAll);
 
-
-            BackBuffer = Resource.FromSwapChain<Texture2D>(_swapChain, 0);
-
-            BackBufferView = new RenderTargetView(_device, BackBuffer);
+            BackBuffer = Resource.FromSwapChain<Texture2D>(SwapChain, 0);
+            RenderView = new RenderTargetView(Device, BackBuffer);
         }
 
         protected override void BeginDraw()
         {
             base.BeginDraw();
-            Device.ImmediateContext.Rasterizer.SetViewport(0, 0, Config.Width, Config.Height);
-            Device.ImmediateContext.OutputMerger.SetTargets(BackBufferView);
+            Device.ImmediateContext.Rasterizer.SetViewport(0, 0, Configuration.Width, Configuration.Height);
+            Device.ImmediateContext.OutputMerger.SetTargets(RenderView);
         }
-
 
         protected override void EndDraw()
         {
-            _swapChain.Present(Config.WaitVerticalBlanking ? 1 : 0, PresentFlags.None);
+            SwapChain.Present(Configuration.WaitVerticalBlanking ? 1 : 0, PresentFlags.None);
         }
+
     }
 }

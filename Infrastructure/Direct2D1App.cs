@@ -20,9 +20,11 @@
 
 using SharpDX;
 using SharpDX.Direct2D1;
+using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using AlphaMode = SharpDX.Direct2D1.AlphaMode;
 using Factory = SharpDX.Direct2D1.Factory;
+using Resource = SharpDX.Direct3D11.Resource;
 
 namespace GoL.frm.Infrastructure
 {
@@ -30,34 +32,62 @@ namespace GoL.frm.Infrastructure
     {
         public Factory Factory2D { get; private set; }
         public SharpDX.DirectWrite.Factory FactoryDWrite { get; private set; }
-        public RenderTarget RenderTarget2D { get; private set; }
+
+
         public SolidColorBrush SceneColorBrush { get; private set; }
+
+        private Surface _surface;
+
+        public RenderTarget RenderTarget2D => _renderTarget2D;
+        private RenderTarget _renderTarget2D;
 
         protected override void Initialize(Configuration configuration)
         {
             base.Initialize(configuration);
             Factory2D = new Factory();
-            using (var surface = BackBuffer.QueryInterface<SharpDX.DXGI.Surface>())
+            using (var surface = BackBuffer.QueryInterface<Surface>())
             {
-                RenderTarget2D = new RenderTarget(Factory2D, surface, new RenderTargetProperties(new PixelFormat(Format.Unknown, AlphaMode.Premultiplied)));
+                _renderTarget2D = new RenderTarget(Factory2D, surface, new RenderTargetProperties(new PixelFormat(Format.Unknown, AlphaMode.Premultiplied)));
             }
-            RenderTarget2D.AntialiasMode = AntialiasMode.PerPrimitive;
+            _renderTarget2D.AntialiasMode = AntialiasMode.PerPrimitive;
 
             FactoryDWrite = new SharpDX.DirectWrite.Factory();
 
-            SceneColorBrush = new SolidColorBrush(RenderTarget2D, Color.White);
+            SceneColorBrush = new SolidColorBrush(_renderTarget2D, Color.White);
         }
 
         protected override void BeginDraw()
         {
             base.BeginDraw();
-            RenderTarget2D.BeginDraw();
+            _renderTarget2D.BeginDraw();
         }
 
         protected override void EndDraw()
         {
-            RenderTarget2D.EndDraw();
+            _renderTarget2D.EndDraw();
             base.EndDraw();
+        }
+
+        protected override void WindowResize(int width, int height)
+        {
+            base.WindowResize(width, height);
+
+
+            Device.ImmediateContext.ClearState();
+
+            _renderTarget2D.Dispose();
+            BackBuffer.Dispose();
+            RenderView.Dispose();
+            _surface?.Dispose();
+
+            SwapChain.ResizeBuffers(1, 0, 0, Format.R8G8B8A8_UNorm, SwapChainFlags.None);
+
+            BackBuffer = Resource.FromSwapChain<Texture2D>(SwapChain, 0);
+            RenderView = new RenderTargetView(Device, BackBuffer);
+            _surface = BackBuffer.QueryInterface<Surface>();
+            _renderTarget2D = new RenderTarget(Factory2D, _surface,
+                new RenderTargetProperties(new PixelFormat(Format.R8G8B8A8_UNorm, AlphaMode.Premultiplied)));
+
         }
     }
 }

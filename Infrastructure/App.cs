@@ -60,7 +60,7 @@ namespace GoL.frm.Infrastructure
 
         protected IntPtr DisplayHandle => _form.Handle;
 
-        public Configuration Config { get; private set; }
+        public Configuration Configuration { get; private set; }
         public float FrameDelta { get; private set; }
         public float FramePerSecond { get; private set; }
 
@@ -79,9 +79,9 @@ namespace GoL.frm.Infrastructure
 
         public void Run(Configuration configuration)
         {
-            Config = configuration ?? new Configuration();
-            _form = CreateForm(Config);
-            Initialize(Config);
+            Configuration = configuration ?? new Configuration();
+            _form = CreateForm(Configuration);
+            Initialize(Configuration);
 
             var isFormClosed = false;
             var formIsResizing = false;
@@ -190,7 +190,7 @@ namespace GoL.frm.Infrastructure
             {
                 FramePerSecond = _frameCount / _frameAccumulator;
 
-                _form.Text = Config.Title + @" - FPS: " + FramePerSecond;
+                _form.Text = Configuration.Title + @" - FPS: " + FramePerSecond;
                 _frameAccumulator = 0.0f;
                 _frameCount = 0;
             }
@@ -200,6 +200,7 @@ namespace GoL.frm.Infrastructure
             EndDraw();
         }
 
+        #region window events
         protected virtual void MouseClick(MouseEventArgs e)
         {
         }
@@ -224,6 +225,12 @@ namespace GoL.frm.Infrastructure
 
         protected virtual void KeyUp(KeyEventArgs e)
         {
+        }
+
+        protected virtual void WindowResize(int width, int height)
+        {
+            Configuration.Width = width;
+            Configuration.Height = height;
         }
 
         private void HandleMouseClick(object sender, MouseEventArgs e)
@@ -262,6 +269,8 @@ namespace GoL.frm.Infrastructure
             {
                 return;
             }
+            WindowResize(((Control)sender).ClientSize.Width, ((Control)sender).ClientSize.Height);
         }
+        #endregion
     }
 }
