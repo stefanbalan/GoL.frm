@@ -65,18 +65,27 @@ namespace GoL.frm
             );
         }
 
+        private float _scale = 1;
         protected override void MouseWheel(MouseEventArgs e)
         {
             base.MouseWheel(e);
-            Zoom(e.Delta / 120);
+            var zoomDelta = e.Delta / 1200F; // 0.1 increments
+
+            var newval = _scale + zoomDelta;
+            if (newval >= 0.1 && newval < 5)
+            {
+                var mousePosRatioX = (float)e.X / Configuration.Width;
+                var mousePosRatioY = (float)e.Y / Configuration.Height;
+
+
+                _offset.X -= (int)(zoomDelta * (_offset.X + e.X / _scale) * mousePosRatioX);
+                _offset.Y -= (int)(zoomDelta * (_offset.Y + e.Y / _scale) * mousePosRatioY);
+
+                _scale = newval;
+            }
         }
 
-        private float _scale = 1;
-        private void Zoom(int i)
-        {
-            var newval = _scale + i / 10F;
-            if (newval >= 0.1 && newval < 5) _scale = newval;
-        }
+
 
         private bool _dragging;
         private Position _dragStartMousePosition;
@@ -100,11 +109,8 @@ namespace GoL.frm
         {
             if (!_dragging) return;
 
-            _offset = new Position
-            {
-                X = _dragStartOffset.X + (int)((e.X - _dragStartMousePosition.X) / _scale),
-                Y = _dragStartOffset.Y + (int)((e.Y - _dragStartMousePosition.Y) / _scale)
-            };
+            _offset.X = _dragStartOffset.X + (int)((e.X - _dragStartMousePosition.X) / _scale);
+            _offset.Y = _dragStartOffset.Y + (int)((e.Y - _dragStartMousePosition.Y) / _scale);
         }
     }
 }
