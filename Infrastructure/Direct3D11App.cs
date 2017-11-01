@@ -53,7 +53,14 @@ namespace GoL.frm.Infrastructure
 
             //SharpDX.Direct3D11.Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.BgraSupport, new[] { FeatureLevel.Level_10_0 }, desc, out _device, out _swapChain);
             // above line is expanded to...
-            Device = new Device(DriverType.Hardware, DeviceCreationFlags.BgraSupport | DeviceCreationFlags.Debug, FeatureLevel.Level_10_0);
+            Device = new Device(
+                DriverType.Hardware,
+                DeviceCreationFlags.BgraSupport
+#if DEBUG 
+                | DeviceCreationFlags.Debug
+#endif
+                ,
+                FeatureLevel.Level_10_0);
             using (Factory1 factory1 = new Factory1())
                 SwapChain = new SwapChain(factory1, Device, desc);
             // ...this!

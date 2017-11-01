@@ -11,7 +11,7 @@ namespace GoL.frm
 {
     public class GameOfLifeGraphicsApp :
         Direct2D1App
-        //Direct2D1WinFormApp
+    //Direct2D1WinFormApp
     {
         private SolidColorBrush _solidColorBrush;
         private List<Position> _map = new List<Position>();
@@ -53,31 +53,45 @@ namespace GoL.frm
             const int cellSize = 10;
             RenderTarget2D.FillRoundedRectangle(new RoundedRectangle
             {
-                RadiusX = 2,
-                RadiusY = 2,
+                RadiusX = (float)(2 * _scale),
+                RadiusY = (float)(2 * _scale),
                 Rect = new RawRectangleF(
-                    _offset.X + x * cellSize,
-                    _offset.Y + y * cellSize,
-                    _offset.X + x * cellSize + cellSize,
-                    _offset.Y + y * cellSize + cellSize
+                    (_offset.X + x * cellSize) * _scale,
+                    (_offset.Y + y * cellSize) * _scale,
+                    (_offset.X + x * cellSize + cellSize) * _scale,
+                    (_offset.Y + y * cellSize + cellSize) * _scale
                     )
             }, _solidColorBrush
             );
         }
 
+        protected override void MouseWheel(MouseEventArgs e)
+        {
+            base.MouseWheel(e);
+            Zoom(e.Delta / 120);
+        }
+
+        private float _scale = 1;
+        private void Zoom(int i)
+        {
+            var newval = _scale + i / 10F;
+            if (newval >= 0.1 && newval < 5) _scale = newval;
+        }
+
         private bool _dragging;
-        private Position _dragStartPosition;
+        private Position _dragStartMousePosition;
         private Position _dragStartOffset;
+
         protected override void MouseDown(MouseEventArgs e)
         {
-            _dragStartPosition = new Position { X = e.X, Y = e.Y };
+            _dragStartMousePosition = new Position { X = e.X, Y = e.Y };
             _dragStartOffset = _offset;
             _dragging = true;
         }
 
         protected override void MouseUp(MouseEventArgs e)
         {
-            _dragStartPosition = new Position { X = e.X, Y = e.Y };
+            _dragStartMousePosition = new Position { X = e.X, Y = e.Y };
             _dragStartOffset = _offset;
             _dragging = false;
         }
@@ -88,8 +102,8 @@ namespace GoL.frm
 
             _offset = new Position
             {
-                X = _dragStartOffset.X + (e.X - _dragStartPosition.X),
-                Y = _dragStartOffset.Y + (e.Y - _dragStartPosition.Y)
+                X = _dragStartOffset.X + (int)((e.X - _dragStartMousePosition.X) / _scale),
+                Y = _dragStartOffset.Y + (int)((e.Y - _dragStartMousePosition.Y) / _scale)
             };
         }
     }

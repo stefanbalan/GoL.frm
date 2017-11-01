@@ -90,6 +90,7 @@ namespace GoL.frm.Infrastructure
             _form.MouseUp += HandleMouseUp;
             _form.MouseMove += HandleMouseMove;
             _form.MouseClick += HandleMouseClick;
+            _form.MouseWheel += HandleMouseWheel;
             _form.KeyDown += HandleKeyDown;
             _form.KeyUp += HandleKeyUp;
             _form.Resize += (o, args) =>
@@ -132,8 +133,6 @@ namespace GoL.frm.Infrastructure
 
             Dispose();
         }
-
-
 
         protected abstract void Initialize(Configuration configuration);
 
@@ -201,6 +200,10 @@ namespace GoL.frm.Infrastructure
         }
 
         #region window events
+        protected virtual void MouseWheel(MouseEventArgs e)
+        {
+        }
+
         protected virtual void MouseClick(MouseEventArgs e)
         {
         }
@@ -231,6 +234,11 @@ namespace GoL.frm.Infrastructure
         {
             Configuration.Width = width;
             Configuration.Height = height;
+        }
+
+        private void HandleMouseWheel(object sender, MouseEventArgs mouseEventArgs)
+        {
+            MouseWheel(mouseEventArgs);
         }
 
         private void HandleMouseClick(object sender, MouseEventArgs e)
