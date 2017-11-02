@@ -33,6 +33,11 @@ namespace GoL.frm.Infrastructure
         private float _frameAccumulator;
         private int _frameCount;
 
+        protected App(Configuration configuration)
+        {
+            Configuration =configuration;
+        }
+
         ~App()
         {
             if (!_disposed)
@@ -74,12 +79,7 @@ namespace GoL.frm.Infrastructure
 
         public void Run()
         {
-            Run(new Configuration());
-        }
-
-        public void Run(Configuration configuration)
-        {
-            Configuration = configuration ?? new Configuration();
+            Configuration = Configuration ?? new Configuration();
             _form = CreateForm(Configuration);
             Initialize(Configuration);
 

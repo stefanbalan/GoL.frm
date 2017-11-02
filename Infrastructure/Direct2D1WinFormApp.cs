@@ -33,6 +33,11 @@ namespace GoL.frm.Infrastructure
         public WindowRenderTarget RenderTarget2D { get; private set; }
         public SolidColorBrush SceneColorBrush { get; private set; }
 
+
+        public Direct2D1WinFormApp(Configuration configuration) : base(configuration)
+        {
+        }
+
         protected override void Initialize(Configuration configuration)
         {
             Factory2D = new Factory();
@@ -72,5 +77,6 @@ namespace GoL.frm.Infrastructure
 
             //RenderTarget2D.Resize(new Size2(width, height));
         }
+
     }
 }

@@ -18,16 +18,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+
+using System;
+using SharpDX;
+
 namespace GoL.frm.Infrastructure
 {
     public class Configuration
     {
+        private Color _backColor;
         public Configuration() : this("...") { }
         public Configuration(string title) : this(title, 800, 600) { }
-        public Configuration(string title, int width, int height) { Title = title; Width = width; Height = height; WaitVerticalBlanking = false; }
+
+        public Configuration(string title, int width, int height)
+        {
+            Title = title; Width = width; Height = height; WaitVerticalBlanking = false;
+
+            BackColor = Color.FromAbgr(0x333333FF);
+            LiveColor = Color.FromAbgr(0xf99d1cFF);
+            BornColor = Color.FromAbgr(0xfdb913FF);
+            DeadColor = Color.FromAbgr(0x000000FF);
+        }
         public string Title { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public bool WaitVerticalBlanking { get; set; }
+
+        public Color BackColor
+        {
+            get => _backColor;
+            set
+            {
+                _backColor = value;
+                OnChange?.Invoke();
+            }
+        }
+
+        public Color LiveColor { get; set; }
+        public Color BornColor { get; set; }
+        public Color DeadColor { get; set; }
+
+        public event Action OnChange;
     }
 }

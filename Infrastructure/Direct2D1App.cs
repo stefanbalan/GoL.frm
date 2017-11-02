@@ -32,14 +32,15 @@ namespace GoL.frm.Infrastructure
     {
         public Factory Factory2D { get; private set; }
         public SharpDX.DirectWrite.Factory FactoryDWrite { get; private set; }
-
-
         public SolidColorBrush SceneColorBrush { get; private set; }
-
         private Surface _surface;
-
         public RenderTarget RenderTarget2D => _renderTarget2D;
         private RenderTarget _renderTarget2D;
+
+
+        public Direct2D1App(Configuration configuration) : base(configuration)
+        {
+        }
 
         protected override void Initialize(Configuration configuration)
         {
@@ -89,5 +90,7 @@ namespace GoL.frm.Infrastructure
                 new RenderTargetProperties(new PixelFormat(Format.R8G8B8A8_UNorm, AlphaMode.Premultiplied)));
 
         }
+
+
     }
 }

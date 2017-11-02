@@ -33,8 +33,9 @@ namespace GoL.frm.Infrastructure
         protected Texture2D BackBuffer;
         protected RenderTargetView RenderView;
 
-
-
+        public Direct3D11App(Configuration configuration) : base(configuration)
+        {
+        }
 
         protected override void Initialize(Configuration configuration)
         {
@@ -83,6 +84,7 @@ namespace GoL.frm.Infrastructure
         {
             SwapChain.Present(Configuration.WaitVerticalBlanking ? 1 : 0, PresentFlags.None);
         }
+
 
     }
 }
