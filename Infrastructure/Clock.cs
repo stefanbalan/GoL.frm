@@ -20,7 +20,7 @@
 
 using System.Diagnostics;
 
-namespace GoL.frm.Infrastructure
+namespace GoL.Infrastructure
 {
     public class Clock
     {

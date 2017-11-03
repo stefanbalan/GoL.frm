@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using GoL.frm.Infrastructure;
-using SharpDX;
+using GoL.Infrastructure;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
-using Configuration = GoL.frm.Infrastructure.Configuration;
+using Configuration = GoL.Infrastructure.Configuration;
 
-namespace GoL.frm
+namespace GoL
 {
     public class GameOfLifeGraphicsApp :
         Direct2D1App

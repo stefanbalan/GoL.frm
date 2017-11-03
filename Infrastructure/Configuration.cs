@@ -22,11 +22,14 @@
 using System;
 using SharpDX;
 
-namespace GoL.frm.Infrastructure
+namespace GoL.Infrastructure
 {
     public class Configuration
     {
         private Color _backColor;
+        private Color _liveColor;
+        private Color _bornColor;
+        private Color _deadColor;
         public Configuration() : this("...") { }
         public Configuration(string title) : this(title, 800, 600) { }
 
@@ -34,6 +37,7 @@ namespace GoL.frm.Infrastructure
         {
             Title = title; Width = width; Height = height; WaitVerticalBlanking = false;
 
+            //default colors
             BackColor = Color.FromAbgr(0x333333FF);
             LiveColor = Color.FromAbgr(0xf99d1cFF);
             BornColor = Color.FromAbgr(0xfdb913FF);
@@ -47,16 +51,26 @@ namespace GoL.frm.Infrastructure
         public Color BackColor
         {
             get => _backColor;
-            set
-            {
-                _backColor = value;
-                OnChange?.Invoke();
-            }
+            set { _backColor = value; OnChange?.Invoke(); }
         }
 
-        public Color LiveColor { get; set; }
-        public Color BornColor { get; set; }
-        public Color DeadColor { get; set; }
+        public Color LiveColor
+        {
+            get => _liveColor;
+            set { _liveColor = value; OnChange?.Invoke(); }
+        }
+
+        public Color BornColor
+        {
+            get => _bornColor;
+            set { _bornColor = value; OnChange?.Invoke(); }
+        }
+
+        public Color DeadColor
+        {
+            get => _deadColor;
+            set { _deadColor = value; OnChange?.Invoke(); }
+        }
 
         public event Action OnChange;
     }

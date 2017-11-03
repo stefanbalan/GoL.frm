@@ -24,7 +24,7 @@ using SharpDX.DXGI;
 using AlphaMode = SharpDX.Direct2D1.AlphaMode;
 using Factory = SharpDX.Direct2D1.Factory;
 
-namespace GoL.frm.Infrastructure
+namespace GoL.Infrastructure
 {
     public class Direct2D1WinFormApp : App
     {

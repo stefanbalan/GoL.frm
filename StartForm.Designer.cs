@@ -1,4 +1,4 @@
-﻿namespace GoL.frm
+﻿namespace GoL
 {
     partial class StartForm
     {

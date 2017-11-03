@@ -24,7 +24,7 @@ using SharpDX.DXGI;
 using Device = SharpDX.Direct3D11.Device;
 using Resource = SharpDX.Direct3D11.Resource;
 
-namespace GoL.frm.Infrastructure
+namespace GoL.Infrastructure
 {
     public class Direct3D11App : App
     {

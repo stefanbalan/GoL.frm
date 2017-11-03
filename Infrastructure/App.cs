@@ -22,7 +22,7 @@ using System;
 using System.Windows.Forms;
 using SharpDX.Windows;
 
-namespace GoL.frm.Infrastructure
+namespace GoL.Infrastructure
 {
     public abstract class App : IDisposable
     {

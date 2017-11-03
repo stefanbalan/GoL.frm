@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SharpDX;
-using Configuration = GoL.frm.Infrastructure.Configuration;
+using Configuration = GoL.Infrastructure.Configuration;
 
-namespace GoL.frm
+namespace GoL
 {
     public partial class StartForm : Form
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Drawing;
-using SharpDX.Windows;
 using SharpDX.DXGI;
+using SharpDX.Windows;
 using D2D1 = SharpDX.Direct2D1;
 
-namespace GoL.frm
+namespace GoL
 {
     public class GameSurface : IDisposable
     {

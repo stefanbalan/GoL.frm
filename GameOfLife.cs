@@ -1,17 +1,10 @@
-﻿namespace GoL.frm
+﻿namespace GoL
 {
-    public struct Position
+    public class GameOfLife : IGame
     {
-        public int X;
-        public int Y;
-    }
-
-    public interface IGame
-    {
-
-    }
-    public class GameOfLife
-    {
-
+        public void Initialize()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

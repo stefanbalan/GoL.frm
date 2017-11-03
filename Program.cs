@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace GoL.frm
+namespace GoL
 {
     static class Program
     {
