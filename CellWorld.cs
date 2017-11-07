@@ -11,19 +11,19 @@ namespace GoL
     }
 
     /// <summary>
-    /// A sparse array of booleans (stored as bit)
+    /// A sparse array of booleans (stored as bits)
     /// </summary>
-    public class SparseArrayWorld : IWorld
+    public class CellWorld : IWorld
     {
         internal int _version;
         private readonly SortedList<int, SortedList<int, ulong>> _rows;
 
-        public SparseArrayWorld()
+        public CellWorld()
         {
             _rows = new SortedList<int, SortedList<int, ulong>>();
         }
 
-        public SparseArrayWorld(SparseArrayWorld existing)
+        public CellWorld(CellWorld existing)
         {
             _rows = new SortedList<int, SortedList<int, ulong>>(existing._rows.Count);
             foreach (var row in existing._rows)
@@ -96,6 +96,74 @@ namespace GoL
             }
         }
 
+        public IWorld Add(IWorld toAdd)
+        {
+            return Add((CellWorld)toAdd);
+        }
+        public CellWorld Add(CellWorld toAdd)
+        {
+            if (toAdd == null) return this;
+            foreach (var rowToAdd in toAdd._rows)
+            {
+                if (_rows.ContainsKey(rowToAdd.Key))
+                {
+                    var mergeRow = _rows[rowToAdd.Key];
+                    foreach (var colToAdd in rowToAdd.Value)
+                    {
+                        if (mergeRow.ContainsKey(colToAdd.Key))
+                        {
+                            mergeRow[colToAdd.Key] = mergeRow[colToAdd.Key] | colToAdd.Value;
+                        }
+                        else
+                        {
+                            mergeRow.Add(colToAdd.Key, colToAdd.Value);
+                        }
+                    }
+                }
+                else
+                {
+                    _rows.Add(rowToAdd.Key, rowToAdd.Value);
+                }
+            }
+            return this;
+        }
+
+        public static CellWorld operator +(CellWorld a, CellWorld b)
+        {
+            return a.Add(b);
+        }
+
+        public IWorld Remove(IWorld toRemove)
+        {
+            return Remove((CellWorld)toRemove);
+        }
+
+        public CellWorld Remove(CellWorld toRemove)
+        {
+            if (toRemove == null) return this;
+            foreach (var rowToDel in toRemove._rows)
+            {
+                if (!_rows.ContainsKey(rowToDel.Key)) continue;
+
+                var mergeRow = _rows[rowToDel.Key];
+                foreach (var colToDel in rowToDel.Value)
+                {
+                    if (mergeRow.ContainsKey(colToDel.Key))
+                    {
+                        mergeRow[colToDel.Key] = mergeRow[colToDel.Key] & ~colToDel.Value;
+                    }
+                }
+            }
+            return this;
+        }
+
+        public static CellWorld operator -(CellWorld a, CellWorld b)
+        {
+            return a.Remove(b);
+        }
+
+
+
         public IEnumerator<Position> GetEnumerator()
         {
             return new SparseArrayEnumerator(this);
@@ -105,9 +173,14 @@ namespace GoL
             return GetEnumerator();
         }
 
+        public object Clone()
+        {
+            return new CellWorld(this);
+        }
+
         public class SparseArrayEnumerator : IEnumerator<Position>
         {
-            private readonly SparseArrayWorld _world;
+            private readonly CellWorld _world;
             private readonly SortedList<int, SortedList<int, ulong>> _rows;
             private SortedList<int, ulong> row = new SortedList<int, ulong>();
 
@@ -117,7 +190,7 @@ namespace GoL
             private int rowIndex = -1, colIndex = -1, memIndex = -1;
             private ulong memCell;
 
-            internal SparseArrayEnumerator(SparseArrayWorld world)
+            internal SparseArrayEnumerator(CellWorld world)
             {
                 _world = world;
                 _rows = world._rows;
@@ -200,11 +273,6 @@ namespace GoL
                 row = null;
             }
 
-        }
-
-        public object Clone()
-        {
-            return new SparseArrayWorld(this);
         }
     }
 }

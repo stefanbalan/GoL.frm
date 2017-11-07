@@ -10,7 +10,7 @@ namespace GoL.Test
     public class WorldTest
     {
         private List<Position> _testMap;
-        private SparseArrayWorld _world;
+        private CellWorld _world;
 
         [TestInitialize]
         public void Prepare()
@@ -31,21 +31,20 @@ namespace GoL.Test
             var r = new Random();
             for (var i = 0; i < 10000; i++)
             {
-                var x = r.Next(10000);
-                var y = r.Next(10000);
+                var x = r.Next(1000);
+                var y = r.Next(1000);
                 var n = new Position { X = 100 + x, Y = 100 + y };
                 if (_testMap.Contains(n)) continue;
                 _testMap.Add(n);
             }
 
-            _world = new SparseArrayWorld();
+            _world = new CellWorld();
 
             foreach (var position in _testMap)
             {
                 _world[position.X, position.Y] = true;
             }
         }
-
 
         [TestMethod]
         public void Run()
@@ -85,8 +84,11 @@ namespace GoL.Test
             Debug.WriteLine($"\n\n\n//ulong enumerate: count:{count}, ticks: {sw.ElapsedTicks }, ms:{sw.ElapsedMilliseconds}\n\n\n");
             //uint enumerate: count:19959, ticks: 7375, ms:3
             //uint enumerate: count:105049, ticks: 37074, ms:19
+
             //ulong enumerate: count:9940, ticks: 8296, ms:4
             //ulong enumerate: count:19950, ticks: 8976, ms:4
+            //ulong enumerate: count:109938, ticks: 71533, ms:36
+
         }
 
         [TestMethod]
@@ -116,10 +118,11 @@ namespace GoL.Test
 
             var sw = new Stopwatch();
             sw.Start();
-            var newWorld = (SparseArrayWorld)_world.Clone();
+            var newWorld = (CellWorld)_world.Clone();
             sw.Stop();
             Debug.WriteLine($"\n\n\n//ulong clone: count:{_world._version}, ticks: {sw.ElapsedTicks }, ms:{sw.ElapsedMilliseconds}\n\n\n");
             //ulong clone: count:20000, ticks: 10234, ms:5
+            //ulong clone: count:109949, ticks: 35756, ms:18
 
 
             foreach (var position in _world)
@@ -142,6 +145,63 @@ namespace GoL.Test
                 newWorld[remove.X, remove.Y] = false;
                 Assert.IsFalse(newWorld[remove.X, remove.Y]);
                 Assert.IsTrue(_world[remove.X, remove.Y]);
+            }
+        }
+
+        [TestMethod]
+        public void Add()
+        {
+            var addMap = new List<Position>();
+            var addWorld = new CellWorld();
+
+            var r = new Random();
+            for (var i = 0; i < 1000; i++)
+            {
+                var x = r.Next(1000);
+                var y = r.Next(1000);
+                var n = new Position { X = x, Y = y };
+                if (addMap.Contains(n) || _world[x, y]) continue;
+                addMap.Add(n);
+                addWorld[x, y] = true;
+            }
+
+            _world = _world.Add(addWorld);
+
+            foreach (var position in _testMap)
+            {
+                Assert.IsTrue(_world[position.X, position.Y]);
+            }
+            foreach (var position in addMap)
+            {
+                Assert.IsTrue(_world[position.X, position.Y]);
+            }
+        }
+
+
+        [TestMethod]
+        public void Remove()
+        {
+            var removeMap = new List<Position>();
+            var removeWorld = new CellWorld();
+
+            var r = new Random();
+            for (var i = 0; i < 1000; i++)
+            {
+                var index = r.Next(_testMap.Count);
+                removeWorld[_testMap[index].X, _testMap[index].Y] = true;
+                removeMap.Add(_testMap[index]);
+                _testMap.RemoveAt(index);
+            }
+
+            _world = _world.Remove(removeWorld);
+
+            foreach (var position in _testMap)
+            {
+                Assert.IsTrue(_world[position.X, position.Y]);
+            }
+            foreach (var position in removeMap)
+            {
+                Assert.IsFalse(_world[position.X, position.Y]);
             }
         }
     }

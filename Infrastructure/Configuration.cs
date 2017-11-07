@@ -30,6 +30,9 @@ namespace GoL.Infrastructure
         private Color _liveColor;
         private Color _bornColor;
         private Color _deadColor;
+        private int _targetMs;
+
+
         public Configuration() : this("...") { }
         public Configuration(string title) : this(title, 800, 600) { }
 
@@ -42,6 +45,7 @@ namespace GoL.Infrastructure
             LiveColor = Color.FromAbgr(0xf99d1cFF);
             BornColor = Color.FromAbgr(0xfdb913FF);
             DeadColor = Color.FromAbgr(0x000000FF);
+            TargetMs = 2000;
         }
         public string Title { get; set; }
         public int Width { get; set; }
@@ -70,6 +74,12 @@ namespace GoL.Infrastructure
         {
             get => _deadColor;
             set { _deadColor = value; OnChange?.Invoke(); }
+        }
+
+        public int TargetMs
+        {
+            get => _targetMs;
+            set { _targetMs = value; OnChange?.Invoke(); }
         }
 
         public event Action OnChange;

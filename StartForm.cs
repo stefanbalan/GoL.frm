@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SharpDX;
@@ -8,28 +9,44 @@ namespace GoL
 {
     public partial class StartForm : Form
     {
-        private GameOfLifeGraphicsApp _app;
+        private GameOfLifeApp _app;
+        private GameOfLife _game;
         private Task _appTask;
+        private Task _gameTask;
 
         public StartForm()
         {
             InitializeComponent();
-            _app = new GameOfLifeGraphicsApp(new Configuration());
+            _game = new GameOfLife();
+            _app = new GameOfLifeApp(new Configuration(), _game);
+
             txtBack.Text = _app.Configuration.BackColor.ToAbgr().ToString("X8");
             txtLive.Text = _app.Configuration.LiveColor.ToAbgr().ToString("X8");
             txtBorn.Text = _app.Configuration.BornColor.ToAbgr().ToString("X8");
             txtDead.Text = _app.Configuration.DeadColor.ToAbgr().ToString("X8");
 
+
+
             _appTask = new Task(_app.Run);
             _appTask.Start();
+
         }
 
         private void btnStartStop_Click(object sender, System.EventArgs e)
         {
-
+            if (_gameTask?.Status != TaskStatus.Running)
+            {
+                _game.Stop = false;
+                _gameTask = new Task(_game.Run);
+                _gameTask.Start();
+            }
+            else
+            {
+                _game.Stop = true;
+            }
         }
 
-        #region color settings
+        #region  settings
         private void txtBackground_LostFocus(object sender, System.EventArgs e)
         {
             if (int.TryParse(txtBack.Text,
@@ -81,6 +98,18 @@ namespace GoL
 
             txtDead.Text = _app.Configuration.DeadColor.ToAbgr().ToString("X8");
         }
+
+        private void txtDelay_LostFocus(object sender, EventArgs e)
+        {
+            if (int.TryParse(txtDelay.Text, NumberStyles.None, CultureInfo.InvariantCulture, out int delay))
+            {
+                _app.Configuration.TargetMs = delay;
+            }
+
+            txtDelay.Text = _app.Configuration.TargetMs.ToString();
+        }
+
         #endregion
+
     }
 }

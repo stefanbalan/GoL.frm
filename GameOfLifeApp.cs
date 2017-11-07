@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Windows.Forms;
 using GoL.Infrastructure;
 using SharpDX.Direct2D1;
@@ -9,7 +8,7 @@ using Configuration = GoL.Infrastructure.Configuration;
 
 namespace GoL
 {
-    public class GameOfLifeGraphicsApp :
+    public class GameOfLifeApp :
         Direct2D1App
     //Direct2D1WinFormApp
     {
@@ -20,11 +19,12 @@ namespace GoL
         private readonly int _cellSize = 10;
         private readonly int _cellCornerRadius = 2;
 
-        private List<Position> _testMap = new List<Position>();
-        private List<Position> _testBornMap = new List<Position>();
+        private Generation<CellWorld> current;
+        private readonly GameOfLife game;
 
-        public GameOfLifeGraphicsApp(Configuration configuration) : base(configuration)
+        public GameOfLifeApp(Configuration configuration, GameOfLife game) : base(configuration)
         {
+            this.game = game;
         }
 
         protected override void Initialize(Configuration configuration)
@@ -33,36 +33,43 @@ namespace GoL
             configuration.OnChange += UpdateConfiguration;
             UpdateConfiguration();
 
-            _testMap = new List<Position>
+            current = new Generation<CellWorld> { Live = GetTestInitialMap() };
+            game.Initialize(current);
+        }
+
+        private CellWorld GetTestInitialMap()
+        {
+            var _testMap = new CellWorld
             {
-                new Position { X = 0, Y = 0 },
-                new Position { X = 0, Y = 1 }
+                //block
+                [0, 0] = true,
+                [0, 1] = true,
+                [1, 0] = true,
+                [1, 1] = true,
+                //blinker
+                [20, 0] = true,
+                [20, 1] = true,
+                [20, 2] = true,
+                //blinker
+                [40, 0] = true,
+                [41, 0] = true,
+                [42, 0] = true
             };
+
+            for (var i = 50; i < 100; i++)
+            {
+                _testMap[i, i] = true;
+            }
+
             var r = new Random();
-
-            for (var i = 0; i < 10000; i++)
+            for (var i = 0; i < 100000; i++)
             {
-                var x = r.Next(1000);
-                var y = r.Next(1000);
+                var x = r.Next(1000) + 50;
+                var y = r.Next(1000) + 50;
 
-                _testMap.Add(new Position { X = x, Y = y });
+                _testMap[x, y] = true;
             }
-
-            _testBornMap = new List<Position>
-            {
-                new Position { X = 1, Y = 0 },
-                new Position { X = 1, Y = 1 }
-            };
-            for (var i = 0; i < 1000; i++)
-            {
-                var x = r.Next(1000);
-                var y = r.Next(1000);
-
-                if (_testMap.Any(position => position.X == x && position.Y == y))
-                    i += 1;
-                else
-                    _testBornMap.Add(new Position { X = x, Y = y });
-            }
+            return _testMap;
         }
 
         private void UpdateConfiguration()
@@ -71,6 +78,8 @@ namespace GoL
             _liveColorBrush = new SolidColorBrush(RenderTarget2D, Configuration.LiveColor);
             _bornColorBrush = new SolidColorBrush(RenderTarget2D, Configuration.BornColor);
             _deadColorBrush = new SolidColorBrush(RenderTarget2D, Configuration.DeadColor);
+
+            game.TargetTimeMs = Configuration.TargetMs;
         }
 
 
@@ -78,16 +87,33 @@ namespace GoL
         {
             base.Draw(time);
 
+            var gen = game.TryGetNext();
+            if (gen != null)
+                current = gen;
+
             //RenderTarget2D.Clear(new RawColor4(1F, 01F, 01F, 10));
             RenderTarget2D.FillRectangle(new RawRectangleF(0, 0, Configuration.Width, Configuration.Height), _backColorBrush);
-
-            foreach (var position in _testMap)
+            try
             {
-                DrawLiveCellAt(position.X, position.Y);
+                if (current.Live != null)
+                    foreach (var position in current.Live)
+                    {
+                        DrawLiveCellAt(position.X, position.Y);
+                    }
+                if (current.Born != null)
+                    foreach (var position in current.Born)
+                    {
+                        DrawBornCellAt(position.X, position.Y);
+                    }
+                if (current.Dead != null)
+                    foreach (var position in current.Dead)
+                    {
+                        DrawDeadCellAt(position.X, position.Y);
+                    }
             }
-            foreach (var position in _testBornMap)
+            catch (Exception e)
             {
-                DrawBornCellAt(position.X, position.Y);
+                Debug.WriteLine(e);
             }
         }
 
@@ -110,7 +136,6 @@ namespace GoL
             }, _liveColorBrush
             );
         }
-
         private void DrawBornCellAt(int x, int y)
         {
             var scale = (float)_scale;
@@ -125,6 +150,23 @@ namespace GoL
                         (_offsetY + y * _cellSize + _cellSize - 2) * scale
                     )
             }, _bornColorBrush
+            );
+        }
+        private void DrawDeadCellAt(int x, int y)
+        {
+            var scale = (float)_scale;
+            const int cellSize = 10;
+            RenderTarget2D.FillRoundedRectangle(new RoundedRectangle
+            {
+                RadiusX = (float)(_cellCornerRadius * _scale),
+                RadiusY = (float)(_cellCornerRadius * _scale),
+                Rect = new RawRectangleF(
+                        (_offsetX + x * cellSize) * scale,
+                        (_offsetY + y * cellSize) * scale,
+                        (_offsetX + x * cellSize + cellSize) * scale,
+                        (_offsetY + y * cellSize + cellSize) * scale
+                    )
+            }, _deadColorBrush
             );
         }
 
