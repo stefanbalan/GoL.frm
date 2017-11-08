@@ -57,7 +57,7 @@ namespace GoL
             do
             {
                 sw.Start();
-                currentGeneration = (TWorld)current.Live
+                currentGeneration = (TWorld)((CellWorld)current.Live.Clone())
                     .Add(current.Born)
                     .Remove(current.Dead);
                 next = new Generation<TWorld>();
@@ -69,8 +69,13 @@ namespace GoL
                 current = next;
 
                 sw.Stop();
-                if (sw.ElapsedMilliseconds < TargetTimeMs || _iterations.Count > 8)
+                if (sw.ElapsedMilliseconds < TargetTimeMs)
                     Thread.Sleep((int)(TargetTimeMs - sw.ElapsedMilliseconds));
+                if (_iterations.Count > 8)
+                {
+                    Debug.WriteLine($"{_iterations.Count} itterations; sleeping");
+                    Thread.Sleep((int)(TargetTimeMs - sw.ElapsedMilliseconds));
+                }
                 sw.Reset();
 
             } while (!Stop);

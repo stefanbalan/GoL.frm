@@ -33,7 +33,8 @@ namespace GoL
             configuration.OnChange += UpdateConfiguration;
             UpdateConfiguration();
 
-            current = new Generation<CellWorld> { Live = GetTestInitialMap() };
+            //current = new Generation<CellWorld> { Live = GetTestInitialMap() };
+            current = new Generation<CellWorld> { Live = GetTestInitialLargeMap() };
             game.Initialize(current);
         }
 
@@ -87,19 +88,19 @@ namespace GoL
                 [69, 10] = true,
             };
 
-            //for (var i = 50; i < 100; i++)
-            //{
-            //    _testMap[i, i] = true;
-            //}
+            for (var i = 50; i < 100; i++)
+            {
+                _testMap[i, i] = true;
+            }
 
-            //var r = new Random();
-            //for (var i = 0; i < 1000; i++)
-            //{
-            //    var x = r.Next(100) + 50;
-            //    var y = r.Next(100) + 50;
+            var r = new Random();
+            for (var i = 0; i < 1000; i++)
+            {
+                var x = r.Next(100) + 150;
+                var y = r.Next(100) + 150;
 
-            //    _testMap[x, y] = true;
-            //}
+                _testMap[x, y] = true;
+            }
             return _testMap;
         }
         private CellWorld GetTestInitialLargeMap()
@@ -147,7 +148,6 @@ namespace GoL
             game.TargetTimeMs = Configuration.TargetMs;
         }
 
-
         protected override void Draw(Clock time)
         {
             base.Draw(time);
@@ -156,25 +156,28 @@ namespace GoL
             if (gen != null)
                 current = gen;
 
-            //RenderTarget2D.Clear(new RawColor4(1F, 01F, 01F, 10));
-            RenderTarget2D.FillRectangle(new RawRectangleF(0, 0, Configuration.Width, Configuration.Height), _backColorBrush);
+            RenderTarget2D.Clear(_backColorBrush.Color);
+            //RenderTarget2D.FillRectangle(new RawRectangleF(0, 0, Configuration.Width, Configuration.Height), _backColorBrush);
             try
             {
-                if (current.Live != null)
-                    foreach (var position in current.Live)
-                    {
-                        DrawLiveCellAt(position.X, position.Y);
-                    }
-                if (current.Born != null)
-                    foreach (var position in current.Born)
-                    {
-                        DrawBornCellAt(position.X, position.Y);
-                    }
-                if (current.Dead != null)
-                    foreach (var position in current.Dead)
-                    {
-                        DrawDeadCellAt(position.X, position.Y);
-                    }
+                if (_scale > 0.5M)
+                {
+                    if (current.Live != null)
+                        foreach (var position in current.Live) DrawLiveCellAt(position.X, position.Y);
+                    if (current.Born != null)
+                        foreach (var position in current.Born) DrawBornCellAt(position.X, position.Y);
+                    if (current.Dead != null)
+                        foreach (var position in current.Dead) DrawDeadCellAt(position.X, position.Y);
+                }
+                else
+                {
+                    if (current.Live != null)
+                        foreach (var position in current.Live) DrawSmallLiveCellAt(position.X, position.Y);
+                    if (current.Born != null)
+                        foreach (var position in current.Born) DrawSmallBornCellAt(position.X, position.Y);
+                    if (current.Dead != null)
+                        foreach (var position in current.Dead) DrawSmallDeadCellAt(position.X, position.Y);
+                }
             }
             catch (Exception e)
             {
@@ -184,6 +187,7 @@ namespace GoL
 
         private float _offsetX;
         private float _offsetY;
+
         private void DrawLiveCellAt(int x, int y)
         {
             var scale = (float)_scale;
@@ -233,6 +237,40 @@ namespace GoL
                     )
             }, _deadColorBrush
             );
+        }
+
+
+        private void DrawSmallLiveCellAt(int x, int y)
+        {
+            var scale = (float)_scale;
+            const int cellSize = 10;
+            RenderTarget2D.FillRectangle(new RawRectangleF(
+                    (_offsetX + x * cellSize) * scale,
+                    (_offsetY + y * cellSize) * scale,
+                    (_offsetX + x * cellSize + cellSize) * scale,
+                    (_offsetY + y * cellSize + cellSize) * scale
+            ), _liveColorBrush);
+        }
+        private void DrawSmallBornCellAt(int x, int y)
+        {
+            var scale = (float)_scale;
+            RenderTarget2D.FillRectangle(new RawRectangleF(
+                    (_offsetX + x * _cellSize + 2) * scale,
+                    (_offsetY + y * _cellSize + 2) * scale,
+                    (_offsetX + x * _cellSize + _cellSize - 2) * scale,
+                    (_offsetY + y * _cellSize + _cellSize - 2) * scale
+                ), _bornColorBrush);
+        }
+        private void DrawSmallDeadCellAt(int x, int y)
+        {
+            var scale = (float)_scale;
+            const int cellSize = 10;
+            RenderTarget2D.FillRectangle(new RawRectangleF(
+                        (_offsetX + x * cellSize) * scale,
+                        (_offsetY + y * cellSize) * scale,
+                        (_offsetX + x * cellSize + cellSize) * scale,
+                        (_offsetY + y * cellSize + cellSize) * scale
+                    ), _deadColorBrush);
         }
 
         private decimal _scale = 1;
