@@ -25,7 +25,7 @@
 
         public override void ComputeNextGeneration()
         {
-            if (KeepChanges)
+            if (HighlightChanges)
                 foreach (var cell in currentGeneration)
                 {
                     for (var row = cell.Y - 1; row <= cell.Y + 1; row++)

@@ -16,7 +16,7 @@ namespace GoL
         protected TWorld nextGeneration;
         protected Generation<TWorld> next;
 
-        public bool KeepChanges { get; set; }
+        public bool HighlightChanges { get; set; }
 
 
         protected GameOfLifeBase()

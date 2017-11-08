@@ -42,6 +42,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtDelay = new System.Windows.Forms.TextBox();
+            this.chkHighlight = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -158,11 +159,24 @@
             this.txtDelay.Text = "2000";
             this.txtDelay.LostFocus += new System.EventHandler(this.txtDelay_LostFocus);
             // 
+            // chkHighlight
+            // 
+            this.chkHighlight.AutoSize = true;
+            this.chkHighlight.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkHighlight.Location = new System.Drawing.Point(21, 176);
+            this.chkHighlight.Name = "chkHighlight";
+            this.chkHighlight.Size = new System.Drawing.Size(111, 17);
+            this.chkHighlight.TabIndex = 16;
+            this.chkHighlight.Text = "Highlight changes";
+            this.chkHighlight.UseVisualStyleBackColor = true;
+            this.chkHighlight.CheckedChanged += new System.EventHandler(this.chkHighlight_CheckedChanged);
+            // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 203);
+            this.ClientSize = new System.Drawing.Size(381, 234);
+            this.Controls.Add(this.chkHighlight);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtDelay);
             this.Controls.Add(this.groupBox1);
@@ -192,6 +206,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtDelay;
+        private System.Windows.Forms.CheckBox chkHighlight;
     }
 }
 

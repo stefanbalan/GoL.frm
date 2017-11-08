@@ -17,15 +17,13 @@ namespace GoL
         public StartForm()
         {
             InitializeComponent();
-            _game = new GameOfLifeFinal();
+            _game = new GameOfLifeMine();
             _app = new GameOfLifeApp(new Configuration(), _game);
 
             txtBack.Text = _app.Configuration.BackColor.ToAbgr().ToString("X8");
             txtLive.Text = _app.Configuration.LiveColor.ToAbgr().ToString("X8");
             txtBorn.Text = _app.Configuration.BornColor.ToAbgr().ToString("X8");
             txtDead.Text = _app.Configuration.DeadColor.ToAbgr().ToString("X8");
-
-
 
             _appTask = new Task(_app.Run);
             _appTask.Start();
@@ -49,7 +47,7 @@ namespace GoL
         }
 
         #region  settings
-        private void txtBackground_LostFocus(object sender, System.EventArgs e)
+        private void txtBackground_LostFocus(object sender, EventArgs e)
         {
             if (int.TryParse(txtBack.Text,
                 NumberStyles.AllowHexSpecifier | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
@@ -62,7 +60,7 @@ namespace GoL
             txtBack.Text = _app.Configuration.BackColor.ToAbgr().ToString("X8");
         }
 
-        private void txtLive_LostFocus(object sender, System.EventArgs e)
+        private void txtLive_LostFocus(object sender, EventArgs e)
         {
             if (int.TryParse(txtLive.Text,
                 NumberStyles.AllowHexSpecifier | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
@@ -75,7 +73,7 @@ namespace GoL
             txtLive.Text = _app.Configuration.LiveColor.ToAbgr().ToString("X8");
         }
 
-        private void txtBorn_LostFocus(object sender, System.EventArgs e)
+        private void txtBorn_LostFocus(object sender, EventArgs e)
         {
             if (int.TryParse(txtBorn.Text,
                 NumberStyles.AllowHexSpecifier | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
@@ -88,7 +86,7 @@ namespace GoL
             txtBorn.Text = _app.Configuration.BornColor.ToAbgr().ToString("X8");
         }
 
-        private void txtDead_LostFocus(object sender, System.EventArgs e)
+        private void txtDead_LostFocus(object sender, EventArgs e)
         {
             if (int.TryParse(txtDead.Text,
                 NumberStyles.AllowHexSpecifier | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
@@ -110,8 +108,13 @@ namespace GoL
 
             txtDelay.Text = _app.Configuration.TargetMs.ToString();
         }
+        private void chkHighlight_CheckedChanged(object sender, EventArgs e)
+        {
+            _game.HighlightChanges = chkHighlight.Checked;
+        }
 
         #endregion
+
 
     }
 }
