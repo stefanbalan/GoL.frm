@@ -9,13 +9,13 @@ namespace GoL.Test
     [TestClass]
     public class WorldTest
     {
-        private List<Position> _testMap;
+        private List<Cell> _testMap;
         private CellWorld _world;
 
         [TestInitialize]
         public void Prepare()
         {
-            _testMap = new List<Position>
+            _testMap = new List<Cell>
             {
 
             };
@@ -24,7 +24,7 @@ namespace GoL.Test
             {
                 for (var j = 0; j < 100; j++)
                 {
-                    _testMap.Add(new Position { X = i, Y = j });
+                    _testMap.Add(new Cell { X = i, Y = j });
                 }
             }
 
@@ -33,7 +33,7 @@ namespace GoL.Test
             {
                 var x = r.Next(1000);
                 var y = r.Next(1000);
-                var n = new Position { X = 100 + x, Y = 100 + y };
+                var n = new Cell { X = 100 + x, Y = 100 + y };
                 if (_testMap.Contains(n)) continue;
                 _testMap.Add(n);
             }
@@ -151,7 +151,7 @@ namespace GoL.Test
         [TestMethod]
         public void Add()
         {
-            var addMap = new List<Position>();
+            var addMap = new List<Cell>();
             var addWorld = new CellWorld();
 
             var r = new Random();
@@ -159,7 +159,7 @@ namespace GoL.Test
             {
                 var x = r.Next(1000);
                 var y = r.Next(1000);
-                var n = new Position { X = x, Y = y };
+                var n = new Cell { X = x, Y = y };
                 if (addMap.Contains(n) || _world[x, y]) continue;
                 addMap.Add(n);
                 addWorld[x, y] = true;
@@ -181,7 +181,7 @@ namespace GoL.Test
         [TestMethod]
         public void Remove()
         {
-            var removeMap = new List<Position>();
+            var removeMap = new List<Cell>();
             var removeWorld = new CellWorld();
 
             var r = new Random();

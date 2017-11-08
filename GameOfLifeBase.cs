@@ -11,37 +11,40 @@ namespace GoL
         public const bool Alive = true;
         public const bool Dead = false;
         private readonly ConcurrentQueue<Generation<TWorld>> _iterations;
-        private Generation<TWorld> _current;
+        protected TWorld currentGeneration;
+        protected Generation<TWorld> current;
+        protected TWorld nextGeneration;
+        protected Generation<TWorld> next;
+
+        public bool KeepChanges { get; set; }
+
 
         protected GameOfLifeBase()
         {
             _iterations = new ConcurrentQueue<Generation<TWorld>>();
-            _current = new Generation<TWorld> { Live = new TWorld() };
-            _iterations.Enqueue(_current);
+            current = new Generation<TWorld> { Live = new TWorld() };
+            _iterations.Enqueue(current);
 
             TargetTimeMs = 1000;
         }
 
         public void Initialize(Generation<TWorld> generation)
         {
-            _current = generation;
-            _iterations.Enqueue(_current);
+            current = generation;
+            _iterations.Enqueue(current);
+        }
+
+        public void AddCellAt(int x, int y)
+        {
+            current.Live[x, y] = true;
         }
 
         #region Game
-        public abstract Generation<TWorld> ComputeNextGeneration(Generation<TWorld> previousGeneration);
+        public abstract bool IsAlive(int i, int cellPositionX);
 
-        public abstract int GetNumberOfNeighbours(IWorld world, int cellPositionX, int cellPositionY);
-        public abstract bool IsAlive(IWorld world, int cellPositionX, int cellPositionY);
+        public abstract int GetNumberOfNeighbours(int i, int cellPositionX);
 
-        public abstract bool IsItLonely(int numberOfNeighbours);
-        public abstract bool IsItJustRight(int numberOfNeighbours);
-        public abstract bool IsItPerfect(int numberOfNeighbours);
-        public abstract bool IsItOvercrowded(int numberOfNeighbours);
-
-        public abstract bool WillItBeBorn(int numberOfNeighbours);
-        public abstract bool WillItLive(int numberOfNeighbours);
-        public abstract bool WillItDie(int numberOfNeighbours);
+        public abstract void ComputeNextGeneration();
         #endregion
 
 
@@ -54,11 +57,19 @@ namespace GoL
             do
             {
                 sw.Start();
-                var newGeneration = ComputeNextGeneration(_current);
-                _iterations.Enqueue(newGeneration);
-                _current = newGeneration;
+                currentGeneration = (TWorld)current.Live
+                    .Add(current.Born)
+                    .Remove(current.Dead);
+                next = new Generation<TWorld>();
+                nextGeneration = next.Live;
+
+                ComputeNextGeneration();
+
+                _iterations.Enqueue(next);
+                current = next;
+
                 sw.Stop();
-                if (sw.ElapsedMilliseconds < TargetTimeMs)
+                if (sw.ElapsedMilliseconds < TargetTimeMs || _iterations.Count > 8)
                     Thread.Sleep((int)(TargetTimeMs - sw.ElapsedMilliseconds));
                 sw.Reset();
 

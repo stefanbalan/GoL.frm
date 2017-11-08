@@ -10,14 +10,14 @@ namespace GoL
     public partial class StartForm : Form
     {
         private GameOfLifeApp _app;
-        private GameOfLife _game;
+        private GameOfLifeBase<CellWorld> _game;
         private Task _appTask;
         private Task _gameTask;
 
         public StartForm()
         {
             InitializeComponent();
-            _game = new GameOfLife();
+            _game = new GameOfLifeFinal();
             _app = new GameOfLifeApp(new Configuration(), _game);
 
             txtBack.Text = _app.Configuration.BackColor.ToAbgr().ToString("X8");
@@ -39,10 +39,12 @@ namespace GoL
                 _game.Stop = false;
                 _gameTask = new Task(_game.Run);
                 _gameTask.Start();
+                btnStartStop.Text = @"Stop";
             }
             else
             {
                 _game.Stop = true;
+                btnStartStop.Text = @"Start";
             }
         }
 

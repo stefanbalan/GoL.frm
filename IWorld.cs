@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GoL
 {
-    public interface IWorld : IEnumerable<Position>, ICloneable
+    public interface IWorld : IEnumerable<Cell>, ICloneable
     {
         bool this[int x, int y] { get; set; }
 

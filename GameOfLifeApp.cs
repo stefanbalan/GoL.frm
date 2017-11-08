@@ -20,9 +20,9 @@ namespace GoL
         private readonly int _cellCornerRadius = 2;
 
         private Generation<CellWorld> current;
-        private readonly GameOfLife game;
+        private readonly GameOfLifeBase<CellWorld> game;
 
-        public GameOfLifeApp(Configuration configuration, GameOfLife game) : base(configuration)
+        public GameOfLifeApp(Configuration configuration, GameOfLifeBase<CellWorld> game) : base(configuration)
         {
             this.game = game;
         }
@@ -38,6 +38,71 @@ namespace GoL
         }
 
         private CellWorld GetTestInitialMap()
+        {
+            var _testMap = new CellWorld
+            {
+                ////block
+                //[0, 0] = true,
+                //[0, 1] = true,
+                //[1, 0] = true,
+                //[1, 1] = true,
+                ////blinker
+                //[10, 0] = true,
+                //[10, 1] = true,
+                //[10, 2] = true,
+                ////blinker
+                //[20, -1] = true,
+                //[20, 0] = true,
+                //[20, 1] = true,
+
+                //gun?
+                [30, 10] = true,
+                [31, 10] = true,
+                [32, 10] = true,
+                [33, 10] = true,
+                [34, 10] = true,
+                [35, 10] = true,
+                [36, 10] = true,
+                [37, 10] = true,
+                [38, 10] = true,
+                [40, 10] = true,
+                [41, 10] = true,
+                [42, 10] = true,
+                [43, 10] = true,
+                [44, 10] = true,
+                [48, 10] = true,
+                [49, 10] = true,
+                [50, 10] = true,
+                [57, 10] = true,
+                [58, 10] = true,
+                [59, 10] = true,
+                [60, 10] = true,
+                [61, 10] = true,
+                [62, 10] = true,
+                [63, 10] = true,
+                [65, 10] = true,
+                [66, 10] = true,
+                [67, 10] = true,
+                [68, 10] = true,
+                [69, 10] = true,
+            };
+
+            //for (var i = 50; i < 100; i++)
+            //{
+            //    _testMap[i, i] = true;
+            //}
+
+            //var r = new Random();
+            //for (var i = 0; i < 1000; i++)
+            //{
+            //    var x = r.Next(100) + 50;
+            //    var y = r.Next(100) + 50;
+
+            //    _testMap[x, y] = true;
+            //}
+            return _testMap;
+        }
+        private CellWorld GetTestInitialLargeMap()
         {
             var _testMap = new CellWorld
             {
@@ -188,20 +253,23 @@ namespace GoL
         }
 
         private bool _dragging;
-        private Position _dragStartMousePosition;
+        private Cell _dragStartMousePosition;
         private float _dragStartOffsetX;
         private float _dragStartOffsetY;
         protected override void MouseDown(MouseEventArgs e)
         {
-            _dragStartMousePosition = new Position { X = e.X, Y = e.Y };
-            _dragStartOffsetX = _offsetX;
-            _dragStartOffsetY = _offsetY;
-            _dragging = true;
+            if (e.Button == MouseButtons.Left)
+            {
+                _dragStartMousePosition = new Cell { X = e.X, Y = e.Y };
+                _dragStartOffsetX = _offsetX;
+                _dragStartOffsetY = _offsetY;
+                _dragging = true;
+            }
         }
 
         protected override void MouseUp(MouseEventArgs e)
         {
-            _dragStartMousePosition = new Position { X = e.X, Y = e.Y };
+            _dragStartMousePosition = new Cell { X = e.X, Y = e.Y };
             _dragStartOffsetX = _offsetX;
             _dragStartOffsetY = _offsetY;
             _dragging = false;

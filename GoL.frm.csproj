@@ -75,7 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameOfLife.cs" />
+    <Compile Include="GameOfLifeFinal.cs" />
+    <Compile Include="GameOfLifeTemplate.cs" />
+    <Compile Include="GameOfLifeMine.cs" />
     <Compile Include="GameOfLifeBase.cs" />
     <Compile Include="GameOfLifeApp.cs" />
     <Compile Include="IGame.cs" />

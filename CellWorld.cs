@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GoL
 {
-    public struct Position
+    public struct Cell
     {
         public int X;
         public int Y;
@@ -20,6 +21,8 @@ namespace GoL
 
         public CellWorld()
         {
+            MinX = MinY = int.MaxValue;
+            MaxX = MaxY = int.MinValue;
             _rows = new SortedList<int, SortedList<int, ulong>>();
         }
 
@@ -54,6 +57,7 @@ namespace GoL
             }
             set
             {
+                SetInterval(x, y);
                 var rowIndex = _rows.IndexOfKey(y);
                 SortedList<int, ulong> row;
                 if (rowIndex < 0)
@@ -95,6 +99,22 @@ namespace GoL
                 }
             }
         }
+
+        private void SetInterval(int x, int y)
+        {
+            if (x - 1 < MinX) MinX = x - 1;
+            if (x + 1 > MaxX) MaxX = x + 1;
+            if (y - 1 < MinY) MinY = y - 1;
+            if (y + 1 > MaxY) MaxY = y + 1;
+        }
+
+        public int MinX { get; private set; }
+        public int MinY { get; private set; }
+        public int MaxX { get; private set; }
+        public int MaxY { get; private set; }
+
+        //public int Rows => _rows.Keys[_rows.Count];
+        //public int Columns => _rows.Values.Max(list => list.Keys[list.Count] + 63);
 
         public IWorld Add(IWorld toAdd)
         {
@@ -164,7 +184,7 @@ namespace GoL
 
 
 
-        public IEnumerator<Position> GetEnumerator()
+        public IEnumerator<Cell> GetEnumerator()
         {
             return new SparseArrayEnumerator(this);
         }
@@ -178,13 +198,13 @@ namespace GoL
             return new CellWorld(this);
         }
 
-        public class SparseArrayEnumerator : IEnumerator<Position>
+        public class SparseArrayEnumerator : IEnumerator<Cell>
         {
             private readonly CellWorld _world;
             private readonly SortedList<int, SortedList<int, ulong>> _rows;
             private SortedList<int, ulong> row = new SortedList<int, ulong>();
 
-            private Position _current;
+            private Cell _current;
             private readonly int _version;
 
             private int rowIndex = -1, colIndex = -1, memIndex = -1;
@@ -265,7 +285,7 @@ namespace GoL
                 rowIndex = -1; colIndex = -1; memIndex = -1; memCell = 0;
             }
 
-            public Position Current => _current;
+            public Cell Current => _current;
             object IEnumerator.Current => _current;
 
             public void Dispose()
