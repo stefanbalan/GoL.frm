@@ -8,7 +8,7 @@ using Configuration = GoL.Infrastructure.Configuration;
 
 namespace GoL
 {
-    public class GameOfLifeApp :
+    public class GameOfLifeApp : 
         Direct2D1App
     //Direct2D1WinFormApp
     {
@@ -33,8 +33,8 @@ namespace GoL
             configuration.OnChange += UpdateConfiguration;
             UpdateConfiguration();
 
-            //current = new Generation<CellWorld> { Live = GetTestInitialMap() };
-            current = new Generation<CellWorld> { Live = GetTestInitialLargeMap() };
+            current = new Generation<CellWorld> { Live = GetTestInitialMap() };
+            //current = new Generation<CellWorld> { Live = GetTestInitialLargeMap() };
             game.Initialize(current);
         }
 

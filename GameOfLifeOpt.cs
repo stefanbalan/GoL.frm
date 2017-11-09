@@ -1,6 +1,6 @@
 ﻿namespace GoL
 {
-    public class GameOfLifeMine : GameOfLifeBase<CellWorld>
+    public class GameOfLifeOpt : GameOfLifeBase<CellWorld>
     {
         public override bool IsAlive(int cellPositionX, int cellPositionY)
         {
@@ -34,13 +34,13 @@
                         {
                             var numberOfNeighbours = GetNumberOfNeighbours(column, row);
                             if (!currentGeneration[column, row] && numberOfNeighbours == 3)
-                                next.Born[column, row] = true;
+                                ng.Born[column, row] = true;
 
                             if (currentGeneration[column, row] && (numberOfNeighbours == 2 || numberOfNeighbours == 3))
-                                next.Live[column, row] = true;
+                                ng.Live[column, row] = true;
 
                             if (currentGeneration[column, row] && (numberOfNeighbours < 2 || numberOfNeighbours > 3))
-                                next.Dead[column, row] = true;
+                                ng.Dead[column, row] = true;
                         }
                     }
                 }

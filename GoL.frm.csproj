@@ -77,7 +77,7 @@
   <ItemGroup>
     <Compile Include="GameOfLifeFinal.cs" />
     <Compile Include="GameOfLifeTemplate.cs" />
-    <Compile Include="GameOfLifeMine.cs" />
+    <Compile Include="GameOfLifeOpt.cs" />
     <Compile Include="GameOfLifeBase.cs" />
     <Compile Include="GameOfLifeApp.cs" />
     <Compile Include="IGame.cs" />

@@ -6,8 +6,8 @@
         void AddCellAt(int x, int y);
 
 
-        bool IsAlive(int cellPositionX, int cellPositionY);
-        int GetNumberOfNeighbours(int cellPositionX, int cellPositionY);
+        bool IsAlive(int x, int y);
+        int GetNumberOfNeighbours(int x, int y);
 
         void ComputeNextGeneration();
     }

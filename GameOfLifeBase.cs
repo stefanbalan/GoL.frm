@@ -12,9 +12,9 @@ namespace GoL
         public const bool Dead = false;
         private readonly ConcurrentQueue<Generation<TWorld>> _iterations;
         protected TWorld currentGeneration;
-        protected Generation<TWorld> current;
+        protected Generation<TWorld> cg;
         protected TWorld nextGeneration;
-        protected Generation<TWorld> next;
+        protected Generation<TWorld> ng;
 
         public bool HighlightChanges { get; set; }
 
@@ -22,21 +22,21 @@ namespace GoL
         protected GameOfLifeBase()
         {
             _iterations = new ConcurrentQueue<Generation<TWorld>>();
-            current = new Generation<TWorld> { Live = new TWorld() };
-            _iterations.Enqueue(current);
+            cg = new Generation<TWorld> { Live = new TWorld() };
+            _iterations.Enqueue(cg);
 
             TargetTimeMs = 1000;
         }
 
         public void Initialize(Generation<TWorld> generation)
         {
-            current = generation;
-            _iterations.Enqueue(current);
+            cg = generation;
+            _iterations.Enqueue(cg);
         }
 
         public void AddCellAt(int x, int y)
         {
-            current.Live[x, y] = true;
+            cg.Live[x, y] = true;
         }
 
         #region Game
@@ -57,16 +57,16 @@ namespace GoL
             do
             {
                 sw.Start();
-                currentGeneration = (TWorld)((CellWorld)current.Live.Clone())
-                    .Add(current.Born)
-                    .Remove(current.Dead);
-                next = new Generation<TWorld>();
-                nextGeneration = next.Live;
+                currentGeneration = (TWorld)((CellWorld)cg.Live.Clone())
+                    .Add(cg.Born)
+                    .Remove(cg.Dead);
+                ng = new Generation<TWorld>();
+                nextGeneration = ng.Live;
 
                 ComputeNextGeneration();
 
-                _iterations.Enqueue(next);
-                current = next;
+                _iterations.Enqueue(ng);
+                cg = ng;
 
                 sw.Stop();
                 if (sw.ElapsedMilliseconds < TargetTimeMs)
