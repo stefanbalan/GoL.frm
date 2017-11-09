@@ -34,9 +34,14 @@ namespace GoL
             _iterations.Enqueue(cg);
         }
 
-        public void AddCellAt(int x, int y)
+        public bool GetCellAt(int x, int y)
         {
-            cg.Live[x, y] = true;
+            return cg.Live[x, y];
+        }
+
+        public void SetCellAt(int x, int y, bool alive = true)
+        {
+            cg.Live[x, y] = alive;
         }
 
         #region Game

@@ -17,8 +17,8 @@ namespace GoL
         public StartForm()
         {
             InitializeComponent();
-            //_game = new GameOfLifeOpt();
-            _game = new GameOfLifeTemplate();
+            _game = new GameOfLifeOpt();
+            //_game = new GameOfLifeTemplate();
             _app = new GameOfLifeApp(new Configuration(), _game);
 
             txtBack.Text = _app.Configuration.BackColor.ToAbgr().ToString("X8");

@@ -8,7 +8,7 @@ using Configuration = GoL.Infrastructure.Configuration;
 
 namespace GoL
 {
-    public class GameOfLifeApp : 
+    public class GameOfLifeApp :
         Direct2D1App
     //Direct2D1WinFormApp
     {
@@ -191,16 +191,15 @@ namespace GoL
         private void DrawLiveCellAt(int x, int y)
         {
             var scale = (float)_scale;
-            const int cellSize = 10;
             RenderTarget2D.FillRoundedRectangle(new RoundedRectangle
             {
                 RadiusX = (float)(_cellCornerRadius * _scale),
                 RadiusY = (float)(_cellCornerRadius * _scale),
                 Rect = new RawRectangleF(
-                    (_offsetX + x * cellSize) * scale,
-                    (_offsetY + y * cellSize) * scale,
-                    (_offsetX + x * cellSize + cellSize) * scale,
-                    (_offsetY + y * cellSize + cellSize) * scale
+                    (_offsetX + x * _cellSize) * scale,
+                    (_offsetY + y * _cellSize) * scale,
+                    (_offsetX + x * _cellSize + _cellSize) * scale,
+                    (_offsetY + y * _cellSize + _cellSize) * scale
                     )
             }, _liveColorBrush
             );
@@ -224,16 +223,15 @@ namespace GoL
         private void DrawDeadCellAt(int x, int y)
         {
             var scale = (float)_scale;
-            const int cellSize = 10;
             RenderTarget2D.FillRoundedRectangle(new RoundedRectangle
             {
                 RadiusX = (float)(_cellCornerRadius * _scale),
                 RadiusY = (float)(_cellCornerRadius * _scale),
                 Rect = new RawRectangleF(
-                        (_offsetX + x * cellSize) * scale,
-                        (_offsetY + y * cellSize) * scale,
-                        (_offsetX + x * cellSize + cellSize) * scale,
-                        (_offsetY + y * cellSize + cellSize) * scale
+                        (_offsetX + x * _cellSize) * scale,
+                        (_offsetY + y * _cellSize) * scale,
+                        (_offsetX + x * _cellSize + _cellSize) * scale,
+                        (_offsetY + y * _cellSize + _cellSize) * scale
                     )
             }, _deadColorBrush
             );
@@ -243,12 +241,11 @@ namespace GoL
         private void DrawSmallLiveCellAt(int x, int y)
         {
             var scale = (float)_scale;
-            const int cellSize = 10;
             RenderTarget2D.FillRectangle(new RawRectangleF(
-                    (_offsetX + x * cellSize) * scale,
-                    (_offsetY + y * cellSize) * scale,
-                    (_offsetX + x * cellSize + cellSize) * scale,
-                    (_offsetY + y * cellSize + cellSize) * scale
+                    (_offsetX + x * _cellSize) * scale,
+                    (_offsetY + y * _cellSize) * scale,
+                    (_offsetX + x * _cellSize + _cellSize) * scale,
+                    (_offsetY + y * _cellSize + _cellSize) * scale
             ), _liveColorBrush);
         }
         private void DrawSmallBornCellAt(int x, int y)
@@ -264,12 +261,11 @@ namespace GoL
         private void DrawSmallDeadCellAt(int x, int y)
         {
             var scale = (float)_scale;
-            const int cellSize = 10;
             RenderTarget2D.FillRectangle(new RawRectangleF(
-                        (_offsetX + x * cellSize) * scale,
-                        (_offsetY + y * cellSize) * scale,
-                        (_offsetX + x * cellSize + cellSize) * scale,
-                        (_offsetY + y * cellSize + cellSize) * scale
+                        (_offsetX + x * _cellSize) * scale,
+                        (_offsetY + y * _cellSize) * scale,
+                        (_offsetX + x * _cellSize + _cellSize) * scale,
+                        (_offsetY + y * _cellSize + _cellSize) * scale
                     ), _deadColorBrush);
         }
 
@@ -291,36 +287,72 @@ namespace GoL
         }
 
         private bool _dragging;
-        private Cell _dragStartMousePosition;
+        private int _dragStartMousePositionX;
+        private int _dragStartMousePositionY;
         private float _dragStartOffsetX;
         private float _dragStartOffsetY;
+        private bool _addLive;
+
+        protected override void MouseClick(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var pos = CellPosiionFromScreen(e);
+                _addLive = !game.GetCellAt(pos.x, pos.y);
+                game.SetCellAt(pos.x, pos.y, _addLive);
+            }
+        }
+
         protected override void MouseDown(MouseEventArgs e)
         {
+            _dragging = true;
+
             if (e.Button == MouseButtons.Left)
             {
-                _dragStartMousePosition = new Cell { X = e.X, Y = e.Y };
+                _dragStartMousePositionX = e.X;
+                _dragStartMousePositionY = e.Y;
                 _dragStartOffsetX = _offsetX;
                 _dragStartOffsetY = _offsetY;
-                _dragging = true;
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                var pos = CellPosiionFromScreen(e);
+                _addLive = !game.GetCellAt(pos.x, pos.y);
             }
         }
 
         protected override void MouseUp(MouseEventArgs e)
         {
-            _dragStartMousePosition = new Cell { X = e.X, Y = e.Y };
-            _dragStartOffsetX = _offsetX;
-            _dragStartOffsetY = _offsetY;
             _dragging = false;
+            //if (e.Button == MouseButtons.Left)
+            //{
+            //    _dragStartMousePositionX = e.X;
+            //    _dragStartMousePositionY = e.Y;
+            //    _dragStartOffsetX = _offsetX;
+            //    _dragStartOffsetY = _offsetY;
+            //}
         }
 
         protected override void MouseMove(MouseEventArgs e)
         {
             if (!_dragging) return;
-
-            _offsetX = _dragStartOffsetX + (int)((e.X - _dragStartMousePosition.X) / _scale);
-            _offsetY = _dragStartOffsetY + (int)((e.Y - _dragStartMousePosition.Y) / _scale);
+            if (e.Button == MouseButtons.Left)
+            {
+                _offsetX = _dragStartOffsetX + (int)((e.X - _dragStartMousePositionX) / _scale);
+                _offsetY = _dragStartOffsetY + (int)((e.Y - _dragStartMousePositionY) / _scale);
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                var pos = CellPosiionFromScreen(e);
+                game.SetCellAt(pos.x, pos.y, _addLive);
+            }
         }
 
-
+        private (int x, int y) CellPosiionFromScreen(MouseEventArgs e)
+        {
+            var lx = (e.X / (float)_scale - _offsetX) / _cellSize;
+            var ly = (e.Y / (float)_scale - _offsetY) / _cellSize;
+            return ((int)lx, (int)ly);
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace GoL.Infrastructure
 
         protected App(Configuration configuration)
         {
-            Configuration =configuration;
+            Configuration = configuration;
         }
 
         ~App()
@@ -110,7 +110,8 @@ namespace GoL.Infrastructure
                 HandleResize(o, args);
             };
 
-            _form.Closed += (o, args) => { isFormClosed = true; };
+            _form.Closing += (sender, args) => args.Cancel = true;
+            _form.Closed += (o, args) => isFormClosed = true;
 
             LoadContent();
 
