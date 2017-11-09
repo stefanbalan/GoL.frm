@@ -45,7 +45,7 @@ namespace GoL.Infrastructure
             LiveColor = Color.FromAbgr(0xf99d1cFF);
             BornColor = Color.FromAbgr(0xfdb913FF);
             DeadColor = Color.FromAbgr(0x000000FF);
-            TargetMs = 2000;
+            TargetMs = 200;
         }
         public string Title { get; set; }
         public int Width { get; set; }

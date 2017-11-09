@@ -276,11 +276,12 @@ namespace GoL
             var zoomDelta = (decimal)(e.Delta / 1200F); // 0.1 increments
 
             var newscale = _scale + zoomDelta;
+            var ss = (float)_scale * (float)newscale;
 
             if (newscale >= 0.1M && newscale < 5)
             {
-                _offsetX -= (int)(e.X * (float)(zoomDelta / newscale));
-                _offsetY -= (int)(e.Y * (float)(zoomDelta / newscale));
+                _offsetX -= (int)(e.X * ((float)zoomDelta / ss));
+                _offsetY -= (int)(e.Y * ((float)zoomDelta / ss));
 
                 _scale = newscale;
             }
