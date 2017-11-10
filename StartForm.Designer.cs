@@ -143,7 +143,6 @@
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(18, 153);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(34, 13);
@@ -161,11 +160,10 @@
             // 
             // chkHighlight
             // 
-            this.chkHighlight.AutoSize = true;
             this.chkHighlight.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkHighlight.Location = new System.Drawing.Point(21, 176);
             this.chkHighlight.Name = "chkHighlight";
-            this.chkHighlight.Size = new System.Drawing.Size(111, 17);
+            this.chkHighlight.Size = new System.Drawing.Size(172, 20);
             this.chkHighlight.TabIndex = 16;
             this.chkHighlight.Text = "Highlight changes";
             this.chkHighlight.UseVisualStyleBackColor = true;

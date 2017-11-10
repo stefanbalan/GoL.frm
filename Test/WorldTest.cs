@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GoL.Test
 {
-    [TestClass]
+    //[TestClass]
     public class WorldTest
     {
         private List<Cell> _testMap;

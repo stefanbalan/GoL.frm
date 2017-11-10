@@ -31,6 +31,7 @@ namespace GoL
         public void Initialize(Generation<TWorld> generation)
         {
             cg = generation;
+            currentGeneration = cg.Live;
             _iterations.Enqueue(cg);
         }
 
@@ -85,7 +86,7 @@ namespace GoL
 
             } while (!Stop);
         }
-
+        
         public Generation<TWorld> TryGetNext()
         {
             return _iterations.TryDequeue(out var result)

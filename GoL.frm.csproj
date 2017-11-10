@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\GameTest.cs" />
     <Compile Include="Test\WorldTest.cs" />
     <Compile Include="CellWorld.cs" />
     <EmbeddedResource Include="StartForm.resx">
