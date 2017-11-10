@@ -39,6 +39,10 @@ namespace GoL
                     newRow[key] = existingRow[key];
                 }
             }
+            MinX = existing.MinX;
+            MinY = existing.MinY;
+            MaxX = existing.MaxX;
+            MaxY = existing.MaxY;
         }
 
         public bool this[int x, int y]
