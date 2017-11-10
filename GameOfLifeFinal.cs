@@ -4,6 +4,7 @@
     {
         public override bool IsAlive(int cellPositionX, int cellPositionY)
         {
+            // currentGeneration
             if (currentGeneration[cellPositionX, cellPositionY] == Alive)
                 return true;
             else
@@ -11,7 +12,7 @@
         }
 
 
-        public override int GetNumberOfNeighbours(int cellPositionX, int cellPositionY)
+        public override int GetNumberOfNeighbours(int x, int y)
         {
             //  1,1     1,2     1,3
             //  2,1     2,2     2,3
@@ -20,16 +21,16 @@
             var neighbours = 0;
 
             //  1,1     1,2     1,3
-            if (IsAlive(cellPositionX - 1, cellPositionY - 1)) neighbours = neighbours + 1;
-            if (IsAlive(cellPositionX, cellPositionY - 1)) neighbours = neighbours + 1;
-            if (IsAlive(cellPositionX + 1, cellPositionY - 1)) neighbours = neighbours + 1;
+            if (IsAlive(x - 1, y - 1)) neighbours = neighbours + 1;
+            if (IsAlive(x, y - 1)) neighbours = neighbours + 1;
+            if (IsAlive(x + 1, y - 1)) neighbours = neighbours + 1;
             //  2,1     2,2     2,3
-            if (IsAlive(cellPositionX - 1, cellPositionY)) neighbours = neighbours + 1;
-            if (IsAlive(cellPositionX + 1, cellPositionY)) neighbours = neighbours + 1;
+            if (IsAlive(x - 1, y)) neighbours = neighbours + 1;
+            if (IsAlive(x + 1, y)) neighbours = neighbours + 1;
             //  3,1     3,2     3,3
-            if (IsAlive(cellPositionX - 1, cellPositionY + 1)) neighbours = neighbours + 1;
-            if (IsAlive(cellPositionX, cellPositionY + 1)) neighbours = neighbours + 1;
-            if (IsAlive(cellPositionX + 1, cellPositionY + 1)) neighbours = neighbours + 1;
+            if (IsAlive(x - 1, y + 1)) neighbours = neighbours + 1;
+            if (IsAlive(x, y + 1)) neighbours = neighbours + 1;
+            if (IsAlive(x + 1, y + 1)) neighbours = neighbours + 1;
             return neighbours;
         }
 
