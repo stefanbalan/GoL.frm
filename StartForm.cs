@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SharpDX;
@@ -16,14 +17,22 @@ namespace GoL
         public StartForm()
         {
             InitializeComponent();
-            //_game = new GameOfLifeOpt();
-            _game = new GameOfLifeTemplate();
+            _game = new GameOfLifeOpt();
+            //_game = new GameOfLifeTemplate();
+
             _app = new GameOfLifeApp(new Configuration(), _game);
 
             txtBack.Text = _app.Configuration.BackColor.ToAbgr().ToString("X8");
             txtLive.Text = _app.Configuration.LiveColor.ToAbgr().ToString("X8");
             txtBorn.Text = _app.Configuration.BornColor.ToAbgr().ToString("X8");
             txtDead.Text = _app.Configuration.DeadColor.ToAbgr().ToString("X8");
+            txtDelay.Text = _app.Configuration.TargetMs.ToString("D");
+
+            if (Directory.Exists("patterns"))
+            {
+                var di = new DirectoryInfo("patterns");
+                lstPatterns.Items.AddRange(di.GetFiles());
+            }
 
             var appTask = new Task(_app.Run);
             appTask.Start();
@@ -113,8 +122,22 @@ namespace GoL
             _game.HighlightChanges = chkHighlight.Checked;
         }
 
+
         #endregion
 
+        private void lstPatterns_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
-    }
+        }
+
+        private void lstPatterns_DoubleClick(object sender, EventArgs e)
+        {
+            var sr = ((FileInfo) ((ListBox) sender).SelectedItem).OpenText();
+            var world = CellWorld.FromRLE(sr);
+            _game.Initialize(new Generation<CellWorld>
+            {
+                Live = world
+        });
+        }
+}
 }

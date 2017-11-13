@@ -43,12 +43,21 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtDelay = new System.Windows.Forms.TextBox();
             this.chkHighlight = new System.Windows.Forms.CheckBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnLoadPattern = new System.Windows.Forms.Button();
+            this.lstPatterns = new System.Windows.Forms.ListBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStartStop
             // 
-            this.btnStartStop.Location = new System.Drawing.Point(271, 12);
+            this.btnStartStop.Location = new System.Drawing.Point(231, 12);
             this.btnStartStop.Name = "btnStartStop";
             this.btnStartStop.Size = new System.Drawing.Size(75, 23);
             this.btnStartStop.TabIndex = 0;
@@ -134,7 +143,7 @@
             this.groupBox1.Controls.Add(this.txtLive);
             this.groupBox1.Controls.Add(this.txtBorn);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 92);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(213, 132);
             this.groupBox1.TabIndex = 13;
@@ -143,7 +152,7 @@
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(18, 153);
+            this.label5.Location = new System.Drawing.Point(67, 22);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(34, 13);
             this.label5.TabIndex = 15;
@@ -151,17 +160,16 @@
             // 
             // txtDelay
             // 
-            this.txtDelay.Location = new System.Drawing.Point(93, 150);
+            this.txtDelay.Location = new System.Drawing.Point(107, 19);
             this.txtDelay.Name = "txtDelay";
             this.txtDelay.Size = new System.Drawing.Size(100, 20);
             this.txtDelay.TabIndex = 14;
-            this.txtDelay.Text = "2000";
             this.txtDelay.LostFocus += new System.EventHandler(this.txtDelay_LostFocus);
             // 
             // chkHighlight
             // 
             this.chkHighlight.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkHighlight.Location = new System.Drawing.Point(21, 176);
+            this.chkHighlight.Location = new System.Drawing.Point(35, 45);
             this.chkHighlight.Name = "chkHighlight";
             this.chkHighlight.Size = new System.Drawing.Size(172, 20);
             this.chkHighlight.TabIndex = 16;
@@ -169,14 +177,72 @@
             this.chkHighlight.UseVisualStyleBackColor = true;
             this.chkHighlight.CheckedChanged += new System.EventHandler(this.chkHighlight_CheckedChanged);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.txtDelay);
+            this.groupBox2.Controls.Add(this.chkHighlight);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(213, 74);
+            this.groupBox2.TabIndex = 14;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Options";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.lstPatterns);
+            this.groupBox3.Controls.Add(this.btnLoadPattern);
+            this.groupBox3.Location = new System.Drawing.Point(12, 230);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(213, 214);
+            this.groupBox3.TabIndex = 15;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Patterns";
+            // 
+            // btnLoadPattern
+            // 
+            this.btnLoadPattern.Location = new System.Drawing.Point(132, 19);
+            this.btnLoadPattern.Name = "btnLoadPattern";
+            this.btnLoadPattern.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadPattern.TabIndex = 0;
+            this.btnLoadPattern.Text = "Load";
+            this.btnLoadPattern.UseVisualStyleBackColor = true;
+            // 
+            // lstPatterns
+            // 
+            this.lstPatterns.FormattingEnabled = true;
+            this.lstPatterns.Location = new System.Drawing.Point(6, 48);
+            this.lstPatterns.Name = "lstPatterns";
+            this.lstPatterns.Size = new System.Drawing.Size(201, 160);
+            this.lstPatterns.TabIndex = 2;
+            this.lstPatterns.SelectedIndexChanged += new System.EventHandler(this.lstPatterns_SelectedIndexChanged);
+            this.lstPatterns.DoubleClick += new System.EventHandler(this.lstPatterns_DoubleClick);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 465);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(314, 22);
+            this.statusStrip1.TabIndex = 16;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(52, 17);
+            this.toolStripStatusLabel1.Text = "lblStatus";
+            // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 234);
-            this.Controls.Add(this.chkHighlight);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtDelay);
+            this.ClientSize = new System.Drawing.Size(314, 487);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnStartStop);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -184,6 +250,11 @@
             this.Text = "Game of Life";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -205,6 +276,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtDelay;
         private System.Windows.Forms.CheckBox chkHighlight;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ListBox lstPatterns;
+        private System.Windows.Forms.Button btnLoadPattern;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

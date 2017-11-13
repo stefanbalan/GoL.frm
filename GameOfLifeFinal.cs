@@ -2,7 +2,7 @@
 {
     public class GameOfLifeFinal : GameOfLifeBase<CellWorld>
     {
-        public override bool IsAlive(int cellPositionX, int cellPositionY)
+        public bool IsAlive(int cellPositionX, int cellPositionY)
         {
             // currentGeneration
             if (currentGeneration[cellPositionX, cellPositionY] == Alive)
@@ -36,9 +36,9 @@
 
         public override void ComputeNextGeneration()
         {
-            for (var x = currentGeneration.MinX; x <= currentGeneration.MaxX; x++)
+            for (var x = currentGeneration.MinRow; x <= currentGeneration.MaxRow; x++)
             {
-                for (var y = currentGeneration.MinY; y <= currentGeneration.MaxY; y++)
+                for (var y = currentGeneration.MinColumn; y <= currentGeneration.MaxColumn; y++)
                 {
                     var numberOfNeighbours = GetNumberOfNeighbours(x, y);
 

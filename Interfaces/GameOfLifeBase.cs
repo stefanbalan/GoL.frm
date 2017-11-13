@@ -46,7 +46,7 @@ namespace GoL
         }
 
         #region Game
-        public abstract bool IsAlive(int i, int cellPositionX);
+        //public abstract bool IsAlive(int i, int cellPositionX);
 
         public abstract int GetNumberOfNeighbours(int i, int cellPositionX);
 

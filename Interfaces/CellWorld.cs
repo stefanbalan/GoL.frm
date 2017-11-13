@@ -1,6 +1,8 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace GoL
@@ -21,8 +23,8 @@ namespace GoL
 
         public CellWorld()
         {
-            MinX = MinY = int.MaxValue;
-            MaxX = MaxY = int.MinValue;
+            MinRow = MinColumn = int.MaxValue;
+            MaxRow = MaxColumn = int.MinValue;
             _rows = new SortedList<int, SortedList<int, ulong>>();
         }
 
@@ -39,10 +41,10 @@ namespace GoL
                     newRow[key] = existingRow[key];
                 }
             }
-            MinX = existing.MinX;
-            MinY = existing.MinY;
-            MaxX = existing.MaxX;
-            MaxY = existing.MaxY;
+            MinRow = existing.MinRow;
+            MinColumn = existing.MinColumn;
+            MaxRow = existing.MaxRow;
+            MaxColumn = existing.MaxColumn;
         }
 
         public bool this[int x, int y]
@@ -106,16 +108,16 @@ namespace GoL
 
         private void SetInterval(int x, int y)
         {
-            if (x - 1 < MinX) MinX = x - 1;
-            if (x + 1 > MaxX) MaxX = x + 1;
-            if (y - 1 < MinY) MinY = y - 1;
-            if (y + 1 > MaxY) MaxY = y + 1;
+            if (x - 1 < MinRow) MinRow = x - 1;
+            if (x + 1 > MaxRow) MaxRow = x + 1;
+            if (y - 1 < MinColumn) MinColumn = y - 1;
+            if (y + 1 > MaxColumn) MaxColumn = y + 1;
         }
 
-        public int MinX { get; private set; }
-        public int MinY { get; private set; }
-        public int MaxX { get; private set; }
-        public int MaxY { get; private set; }
+        public int MinRow { get; private set; }
+        public int MinColumn { get; private set; }
+        public int MaxRow { get; private set; }
+        public int MaxColumn { get; private set; }
 
         //public int Rows => _rows.Keys[_rows.Count];
         //public int Columns => _rows.Values.Max(list => list.Keys[list.Count] + 63);
@@ -297,6 +299,24 @@ namespace GoL
                 row = null;
             }
 
+        }
+
+        public static CellWorld FromRLE(StreamReader f)
+        {
+            var result = new CellWorld();
+
+            var s = f.ReadLine();
+            if (s == null)
+                return result;
+
+            while (s.StartsWith("#"))
+            {
+                s = f.ReadLine();
+            }
+            if (s.StartsWith("x")) s = f.ReadLine();
+
+
+            return result;
         }
     }
 }

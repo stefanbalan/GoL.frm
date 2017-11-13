@@ -6,7 +6,6 @@
         bool GetCellAt(int x, int y);
         void SetCellAt(int x, int y, bool live);
 
-
         //bool IsAlive(int x, int y);
         int GetNumberOfNeighbours(int x, int y);
 

@@ -2,11 +2,6 @@
 {
     public class GameOfLifeOpt : GameOfLifeBase<CellWorld>
     {
-        public override bool IsAlive(int x, int y)
-        {
-            return currentGeneration[x, y];
-        }
-
         public override int GetNumberOfNeighbours(int x, int y)
         {
             var neighbours = 0;

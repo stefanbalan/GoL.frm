@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>intelligence_logo_2_small_EFb_icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\intelligence_logo_2_small_EFb_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -81,18 +81,18 @@
     <Compile Include="GameOfLifeFinal.cs" />
     <Compile Include="GameOfLifeTemplate.cs" />
     <Compile Include="GameOfLifeOpt.cs" />
-    <Compile Include="GameOfLifeBase.cs" />
-    <Compile Include="GameOfLifeApp.cs" />
-    <Compile Include="IGameOriginal.cs" />
-    <Compile Include="IGame.cs" />
+    <Compile Include="Interfaces\GameOfLifeBase.cs" />
+    <Compile Include="Infrastructure\GameOfLifeApp.cs" />
+    <Compile Include="Interfaces\IGameOriginal.cs" />
+    <Compile Include="Interfaces\IGame.cs" />
     <Compile Include="Infrastructure\App.cs" />
     <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\Clock.cs" />
     <Compile Include="Infrastructure\Direct2D1App.cs" />
     <Compile Include="Infrastructure\Direct2D1WinFormApp.cs" />
     <Compile Include="Infrastructure\Direct3D11App.cs" />
-    <Compile Include="IWorld.cs" />
-    <Compile Include="Generation.cs" />
+    <Compile Include="Interfaces\IWorld.cs" />
+    <Compile Include="Infrastructure\Generation.cs" />
     <Compile Include="StartForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,7 +103,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\GameTest.cs" />
     <Compile Include="Test\WorldTest.cs" />
-    <Compile Include="CellWorld.cs" />
+    <Compile Include="Interfaces\CellWorld.cs" />
     <EmbeddedResource Include="StartForm.resx">
       <DependentUpon>StartForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,6 +118,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Patterns\Intelligence">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -135,11 +138,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="intelligence_logo_2_small_EFb_icon.ico" />
+    <Content Include="Resources\intelligence_logo_2_small_EFb_icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
