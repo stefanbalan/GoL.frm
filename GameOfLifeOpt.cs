@@ -2,23 +2,23 @@
 {
     public class GameOfLifeOpt : GameOfLifeBase<CellWorld>
     {
-        public override bool IsAlive(int cellPositionX, int cellPositionY)
+        public override bool IsAlive(int x, int y)
         {
-            return currentGeneration[cellPositionX, cellPositionY];
+            return currentGeneration[x, y];
         }
 
-        public override int GetNumberOfNeighbours(int cellPositionX, int cellPositionY)
+        public override int GetNumberOfNeighbours(int x, int y)
         {
             var neighbours = 0;
 
-            if (currentGeneration[cellPositionX - 1, cellPositionY - 1]) neighbours = neighbours + 1;
-            if (currentGeneration[cellPositionX, cellPositionY - 1]) neighbours = neighbours + 1;
-            if (currentGeneration[cellPositionX + 1, cellPositionY - 1]) neighbours = neighbours + 1;
-            if (currentGeneration[cellPositionX - 1, cellPositionY]) neighbours = neighbours + 1;
-            if (currentGeneration[cellPositionX + 1, cellPositionY]) neighbours = neighbours + 1;
-            if (currentGeneration[cellPositionX - 1, cellPositionY + 1]) neighbours = neighbours + 1;
-            if (currentGeneration[cellPositionX, cellPositionY + 1]) neighbours = neighbours + 1;
-            if (currentGeneration[cellPositionX + 1, cellPositionY + 1]) neighbours = neighbours + 1;
+            if (currentGeneration[x - 1, y - 1]) neighbours = neighbours + 1;
+            if (currentGeneration[x, y - 1]) neighbours = neighbours + 1;
+            if (currentGeneration[x + 1, y - 1]) neighbours = neighbours + 1;
+            if (currentGeneration[x - 1, y]) neighbours = neighbours + 1;
+            if (currentGeneration[x + 1, y]) neighbours = neighbours + 1;
+            if (currentGeneration[x - 1, y + 1]) neighbours = neighbours + 1;
+            if (currentGeneration[x, y + 1]) neighbours = neighbours + 1;
+            if (currentGeneration[x + 1, y + 1]) neighbours = neighbours + 1;
 
             return neighbours;
         }

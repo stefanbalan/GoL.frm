@@ -9,16 +9,15 @@ namespace GoL
 {
     public partial class StartForm : Form
     {
-        private GameOfLifeApp _app;
-        private GameOfLifeBase<CellWorld> _game;
-        private Task _appTask;
+        private readonly GameOfLifeApp _app;
+        private readonly GameOfLifeBase<CellWorld> _game;
         private Task _gameTask;
 
         public StartForm()
         {
             InitializeComponent();
-            _game = new GameOfLifeOpt();
-            //_game = new GameOfLifeTemplate();
+            //_game = new GameOfLifeOpt();
+            _game = new GameOfLifeTemplate();
             _app = new GameOfLifeApp(new Configuration(), _game);
 
             txtBack.Text = _app.Configuration.BackColor.ToAbgr().ToString("X8");
@@ -26,8 +25,8 @@ namespace GoL
             txtBorn.Text = _app.Configuration.BornColor.ToAbgr().ToString("X8");
             txtDead.Text = _app.Configuration.DeadColor.ToAbgr().ToString("X8");
 
-            _appTask = new Task(_app.Run);
-            _appTask.Start();
+            var appTask = new Task(_app.Run);
+            appTask.Start();
 
         }
 

@@ -83,6 +83,7 @@
     <Compile Include="GameOfLifeOpt.cs" />
     <Compile Include="GameOfLifeBase.cs" />
     <Compile Include="GameOfLifeApp.cs" />
+    <Compile Include="IGameOriginal.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="Infrastructure\App.cs" />
     <Compile Include="Infrastructure\Configuration.cs" />
