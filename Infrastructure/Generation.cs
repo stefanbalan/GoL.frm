@@ -1,4 +1,4 @@
-﻿namespace GoL
+﻿namespace GoLife
 {
     public class Generation<TWorld> where TWorld : class, IWorld, new()
     {

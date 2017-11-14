@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{36ED77FC-CDDD-4AF0-9097-6A2A87879D8D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GoL</RootNamespace>
-    <AssemblyName>GoL</AssemblyName>
+    <RootNamespace>GoLife</RootNamespace>
+    <AssemblyName>GoLife</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -78,9 +78,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameOfLifeFinal.cs" />
-    <Compile Include="GameOfLifeTemplate.cs" />
-    <Compile Include="GameOfLifeOpt.cs" />
+    <Compile Include="GameOfLife.cs" />
+    <Compile Include="GameImpl\GameOfLifeOpt.cs" />
+    <Compile Include="GameImpl\GameOfLifeTemplate.cs" />
     <Compile Include="Interfaces\GameOfLifeBase.cs" />
     <Compile Include="Infrastructure\GameOfLifeApp.cs" />
     <Compile Include="Interfaces\IGameOriginal.cs" />
@@ -118,9 +118,23 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
-    <None Include="Patterns\Intelligence">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Patterns\02 Intelligence.rle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Patterns\10 Spaceship factory.rle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Patterns\11 Mothership.rle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Patterns\12 Track laying machine.rle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Patterns\13 Track laying zigzag.rle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Patterns\01 DT logo.rle" />
+    <None Include="Patterns\01 Intelligence logo.rle" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

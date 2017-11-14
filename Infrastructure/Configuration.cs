@@ -22,7 +22,7 @@
 using System;
 using SharpDX;
 
-namespace GoL.Infrastructure
+namespace GoLife.Infrastructure
 {
     public class Configuration
     {

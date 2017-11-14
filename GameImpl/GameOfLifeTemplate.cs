@@ -1,8 +1,8 @@
-﻿namespace GoL
+﻿namespace GoLife
 {
     public class GameOfLifeTemplate : GameOfLifeBase<CellWorld>
     {
-        // currentGeneration [ row, column ] => nextGeneration[ row, column ]
+        // currentGeneration [ row, column ] == Alive => nextGeneration[ row, column ] == Alive/Dead?
 
         public override int GetNumberOfNeighbours(int row, int column)
         {
@@ -36,8 +36,8 @@
 
         public override void ComputeNextGeneration()
         {
-            // currentGeneration ( MinRow, MinColumn )
-            // currentGeneration ( MaxRow, MaxColumn )
+            // currentGeneration ( StartRow, StartColumn )
+            // currentGeneration ( EndRow, EndColumn )
 
             for (/* every row from the minimum value  */; /* to the maximum */; /* increase row */)
             {
@@ -48,7 +48,7 @@
                     // if the cell at row and column is Alive and NumberOfNeighbours for cell at row and column  is smaller than 2 
                     // nextGeneration at row and column becomes Dead
 
-                    // if the cell at row and column is Alive and NumberOfNeighbours for cell at row and column  is greater than 4
+                    // if the cell at row and column is Alive and NumberOfNeighbours for cell at row and column  is greater than 3
                     // nextGeneration at row and column becomes Dead
 
                     // if the cell at row and column is Alive and 

@@ -24,7 +24,7 @@ using SharpDX.DXGI;
 using Device = SharpDX.Direct3D11.Device;
 using Resource = SharpDX.Direct3D11.Resource;
 
-namespace GoL.Infrastructure
+namespace GoLife.Infrastructure
 {
     public class Direct3D11App : App
     {
@@ -58,7 +58,7 @@ namespace GoL.Infrastructure
                 DriverType.Hardware,
                 DeviceCreationFlags.BgraSupport
 #if DEBUG 
-                | DeviceCreationFlags.Debug
+                //| DeviceCreationFlags.Debug
 #endif
                 ,
                 FeatureLevel.Level_10_0);

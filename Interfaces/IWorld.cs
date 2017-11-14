@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GoL
+namespace GoLife
 {
     public interface IWorld : IEnumerable<Cell>, ICloneable
     {

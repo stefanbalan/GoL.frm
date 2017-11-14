@@ -1,4 +1,4 @@
-﻿namespace GoL
+﻿namespace GoLife
 {
     public interface IGame<TWorld> where TWorld : class, IWorld, new()
     {

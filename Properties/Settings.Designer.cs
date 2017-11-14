@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GoL.Properties {
+namespace GoLife.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

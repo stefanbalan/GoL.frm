@@ -1,4 +1,4 @@
-﻿namespace GoL
+﻿namespace GoLife
 {
     partial class StartForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartForm));
             this.btnStartStop = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
@@ -44,13 +45,17 @@
             this.txtDelay = new System.Windows.Forms.TextBox();
             this.chkHighlight = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.trkDelay = new System.Windows.Forms.TrackBar();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnLoadPattern = new System.Windows.Forms.Button();
             this.lstPatterns = new System.Windows.Forms.ListBox();
+            this.btnLoadPattern = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stsLabelAverageTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnStep = new System.Windows.Forms.Button();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkDelay)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -143,7 +148,7 @@
             this.groupBox1.Controls.Add(this.txtLive);
             this.groupBox1.Controls.Add(this.txtBorn);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(12, 92);
+            this.groupBox1.Location = new System.Drawing.Point(12, 148);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(213, 132);
             this.groupBox1.TabIndex = 13;
@@ -152,7 +157,7 @@
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(67, 22);
+            this.label5.Location = new System.Drawing.Point(6, 25);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(34, 13);
             this.label5.TabIndex = 15;
@@ -160,7 +165,7 @@
             // 
             // txtDelay
             // 
-            this.txtDelay.Location = new System.Drawing.Point(107, 19);
+            this.txtDelay.Location = new System.Drawing.Point(107, 22);
             this.txtDelay.Name = "txtDelay";
             this.txtDelay.Size = new System.Drawing.Size(100, 20);
             this.txtDelay.TabIndex = 14;
@@ -169,7 +174,7 @@
             // chkHighlight
             // 
             this.chkHighlight.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkHighlight.Location = new System.Drawing.Point(35, 45);
+            this.chkHighlight.Location = new System.Drawing.Point(35, 104);
             this.chkHighlight.Name = "chkHighlight";
             this.chkHighlight.Size = new System.Drawing.Size(172, 20);
             this.chkHighlight.TabIndex = 16;
@@ -180,25 +185,52 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.txtDelay);
+            this.groupBox2.Controls.Add(this.trkDelay);
             this.groupBox2.Controls.Add(this.chkHighlight);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(213, 74);
+            this.groupBox2.Size = new System.Drawing.Size(213, 130);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Options";
             // 
+            // trkDelay
+            // 
+            this.trkDelay.LargeChange = 1;
+            this.trkDelay.Location = new System.Drawing.Point(9, 48);
+            this.trkDelay.Maximum = 5;
+            this.trkDelay.Minimum = 1;
+            this.trkDelay.Name = "trkDelay";
+            this.trkDelay.Size = new System.Drawing.Size(198, 45);
+            this.trkDelay.TabIndex = 17;
+            this.trkDelay.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.trkDelay.Value = 1;
+            this.trkDelay.Scroll += new System.EventHandler(this.trkDelay_Scroll);
+            // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox3.Controls.Add(this.lstPatterns);
             this.groupBox3.Controls.Add(this.btnLoadPattern);
-            this.groupBox3.Location = new System.Drawing.Point(12, 230);
+            this.groupBox3.Location = new System.Drawing.Point(12, 286);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(213, 214);
+            this.groupBox3.Size = new System.Drawing.Size(213, 220);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Patterns";
+            // 
+            // lstPatterns
+            // 
+            this.lstPatterns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lstPatterns.FormattingEnabled = true;
+            this.lstPatterns.Location = new System.Drawing.Point(6, 48);
+            this.lstPatterns.Name = "lstPatterns";
+            this.lstPatterns.Size = new System.Drawing.Size(201, 147);
+            this.lstPatterns.TabIndex = 2;
+            this.lstPatterns.DoubleClick += new System.EventHandler(this.lstPatterns_DoubleClick);
             // 
             // btnLoadPattern
             // 
@@ -208,38 +240,46 @@
             this.btnLoadPattern.TabIndex = 0;
             this.btnLoadPattern.Text = "Load";
             this.btnLoadPattern.UseVisualStyleBackColor = true;
-            // 
-            // lstPatterns
-            // 
-            this.lstPatterns.FormattingEnabled = true;
-            this.lstPatterns.Location = new System.Drawing.Point(6, 48);
-            this.lstPatterns.Name = "lstPatterns";
-            this.lstPatterns.Size = new System.Drawing.Size(201, 160);
-            this.lstPatterns.TabIndex = 2;
-            this.lstPatterns.SelectedIndexChanged += new System.EventHandler(this.lstPatterns_SelectedIndexChanged);
-            this.lstPatterns.DoubleClick += new System.EventHandler(this.lstPatterns_DoubleClick);
+            this.btnLoadPattern.Click += new System.EventHandler(this.btnLoadPattern_Click);
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 465);
+            this.stsLabelAverageTime});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 528);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(314, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(434, 22);
             this.statusStrip1.TabIndex = 16;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
+            // stsLabelAverageTime
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(52, 17);
-            this.toolStripStatusLabel1.Text = "lblStatus";
+            this.stsLabelAverageTime.Name = "stsLabelAverageTime";
+            this.stsLabelAverageTime.Size = new System.Drawing.Size(41, 17);
+            this.stsLabelAverageTime.Text = "000ms";
+            // 
+            // btnStep
+            // 
+            this.btnStep.Location = new System.Drawing.Point(312, 12);
+            this.btnStep.Name = "btnStep";
+            this.btnStep.Size = new System.Drawing.Size(75, 23);
+            this.btnStep.TabIndex = 17;
+            this.btnStep.Text = "Step";
+            this.btnStep.UseVisualStyleBackColor = true;
+            this.btnStep.Click += new System.EventHandler(this.btnStep_Click);
+            // 
+            // timer
+            // 
+            this.timer.Enabled = true;
+            this.timer.Interval = 5000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(314, 487);
+            this.ClientSize = new System.Drawing.Size(434, 550);
+            this.Controls.Add(this.btnStep);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -252,6 +292,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkDelay)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -281,7 +322,10 @@
         private System.Windows.Forms.ListBox lstPatterns;
         private System.Windows.Forms.Button btnLoadPattern;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel stsLabelAverageTime;
+        private System.Windows.Forms.TrackBar trkDelay;
+        private System.Windows.Forms.Button btnStep;
+        private System.Windows.Forms.Timer timer;
     }
 }
 

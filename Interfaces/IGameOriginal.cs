@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace GoL
+namespace GoLife
 {
     public interface IGameOriginal<TWorld> where TWorld : class, IWorld, new()
     {

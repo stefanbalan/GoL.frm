@@ -1,11 +1,9 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
-namespace GoL
+namespace GoLife
 {
     public struct Cell
     {
@@ -23,8 +21,8 @@ namespace GoL
 
         public CellWorld()
         {
-            MinRow = MinColumn = int.MaxValue;
-            MaxRow = MaxColumn = int.MinValue;
+            StartRow = StartColumn = int.MaxValue;
+            EndRow = EndColumn = int.MinValue;
             _rows = new SortedList<int, SortedList<int, ulong>>();
         }
 
@@ -41,10 +39,10 @@ namespace GoL
                     newRow[key] = existingRow[key];
                 }
             }
-            MinRow = existing.MinRow;
-            MinColumn = existing.MinColumn;
-            MaxRow = existing.MaxRow;
-            MaxColumn = existing.MaxColumn;
+            StartRow = existing.StartRow;
+            StartColumn = existing.StartColumn;
+            EndRow = existing.EndRow;
+            EndColumn = existing.EndColumn;
         }
 
         public bool this[int x, int y]
@@ -108,16 +106,16 @@ namespace GoL
 
         private void SetInterval(int x, int y)
         {
-            if (x - 1 < MinRow) MinRow = x - 1;
-            if (x + 1 > MaxRow) MaxRow = x + 1;
-            if (y - 1 < MinColumn) MinColumn = y - 1;
-            if (y + 1 > MaxColumn) MaxColumn = y + 1;
+            if (x - 1 < StartRow) StartRow = x - 1;
+            if (x + 1 > EndRow) EndRow = x + 1;
+            if (y - 1 < StartColumn) StartColumn = y - 1;
+            if (y + 1 > EndColumn) EndColumn = y + 1;
         }
 
-        public int MinRow { get; private set; }
-        public int MinColumn { get; private set; }
-        public int MaxRow { get; private set; }
-        public int MaxColumn { get; private set; }
+        public int StartRow { get; private set; }
+        public int StartColumn { get; private set; }
+        public int EndRow { get; private set; }
+        public int EndColumn { get; private set; }
 
         //public int Rows => _rows.Keys[_rows.Count];
         //public int Columns => _rows.Values.Max(list => list.Keys[list.Count] + 63);
@@ -303,20 +301,55 @@ namespace GoL
 
         public static CellWorld FromRLE(StreamReader f)
         {
-            var result = new CellWorld();
+            var world = new CellWorld();
 
             var s = f.ReadLine();
             if (s == null)
-                return result;
+                return world;
 
-            while (s.StartsWith("#"))
+            while (s != null && s.StartsWith("#"))
             {
                 s = f.ReadLine();
             }
-            if (s.StartsWith("x")) s = f.ReadLine();
+            if (s != null && s.StartsWith("x")) s = f.ReadLine();
 
+            var row = 0;
+            var col = 0;
+            var count = 0;
+            while (s != null)
+            {
+                foreach (var c in s)
+                {
+                    if (char.IsDigit(c)) { count = (int)(count * 10 + char.GetNumericValue(c)); continue; }
 
-            return result;
+                    switch (c)
+                    {
+                        case '$':
+                            row += count == 0 ? 1 : count;
+                            count = 0;
+                            col = 0;
+                            continue;
+                        case 'b':
+                            col += count == 0 ? 1 : count;
+                            count = 0;
+                            continue;
+                        case 'o':
+                            for (var i = 1; i <= (count == 0 ? 1 : count); i++)
+                            {
+                                world[col, row] = true;
+                                col += 1;
+                            }
+                            count = 0;
+                            continue;
+                        default:
+                            break;
+                    }
+                }
+
+                s = f.ReadLine();
+            }
+
+            return world;
         }
     }
 }

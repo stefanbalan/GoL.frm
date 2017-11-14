@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GoL.Test
+namespace GoLife.Test
 {
     [TestClass]
     public class GameTest
@@ -10,7 +10,7 @@ namespace GoL.Test
         [TestInitialize]
         public void Prepare()
         {
-            game = new GameOfLifeFinal();
+            game = new GameOfLifeOpt();
             var w = new CellWorld
             {
                 [-10, -10] = true,
@@ -57,15 +57,6 @@ namespace GoL.Test
         }
 
         [TestMethod]
-        public void IsAlive()
-        {
-            Assert.IsTrue(game.GetCellAt(0, 0));
-            Assert.IsTrue(game.GetCellAt(0, 1));
-            Assert.IsTrue(game.GetCellAt(1, 0));
-            Assert.IsTrue(game.GetCellAt(1, 1));
-        }
-
-        [TestMethod]
         public void GetNumberOfNeighboursTest()
         {
             Assert.AreEqual(0, game.GetNumberOfNeighbours(-10, -10));
@@ -78,6 +69,51 @@ namespace GoL.Test
             Assert.AreEqual(6, game.GetNumberOfNeighbours(31, 2));
             Assert.AreEqual(7, game.GetNumberOfNeighbours(41, 2));
             Assert.AreEqual(8, game.GetNumberOfNeighbours(11, 2));
+        }
+
+        [TestMethod]
+        public void Rule_Underpopulated()
+        {
+            game.Stop = true;
+            game.Run();
+
+            Assert.IsFalse(game.GetCellAt(-10, -10)); //0
+            Assert.IsFalse(game.GetCellAt(20, 1)); // //1
+        }
+
+
+        [TestMethod]
+        public void Rule_Lives()
+        {
+            game.Stop = true;
+            game.Run();
+
+            Assert.IsTrue(game.GetCellAt(20, 2)); // 2
+            Assert.IsTrue(game.GetCellAt(0, 1)); // 3 lives
+        }
+
+
+        [TestMethod]
+        public void Rule_Overpopulated()
+        {
+            game.Stop = true;
+            game.Run();
+
+            Assert.IsFalse(game.GetCellAt(21, 2)); // 4
+            Assert.IsFalse(game.GetCellAt(10, 2)); // 5
+            Assert.IsFalse(game.GetCellAt(31, 2)); // 6
+            Assert.IsFalse(game.GetCellAt(41, 2)); // 7
+            Assert.IsFalse(game.GetCellAt(11, 2)); // 8
+        }
+
+
+        [TestMethod]
+        public void Rule_NewBorn()
+        {
+            game.Stop = true;
+            game.Run();
+
+            Assert.IsTrue(game.GetCellAt(19, 2)); // 3 born
         }
 
         [TestMethod]
@@ -97,7 +133,5 @@ namespace GoL.Test
             Assert.IsFalse(game.GetCellAt(41, 2)); // 7
             Assert.IsFalse(game.GetCellAt(11, 2)); // 8
         }
-
-
     }
 }

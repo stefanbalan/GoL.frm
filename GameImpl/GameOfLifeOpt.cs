@@ -1,4 +1,4 @@
-﻿namespace GoL
+﻿namespace GoLife
 {
     public class GameOfLifeOpt : GameOfLifeBase<CellWorld>
     {

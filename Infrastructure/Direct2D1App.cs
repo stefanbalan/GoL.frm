@@ -26,7 +26,7 @@ using AlphaMode = SharpDX.Direct2D1.AlphaMode;
 using Factory = SharpDX.Direct2D1.Factory;
 using Resource = SharpDX.Direct3D11.Resource;
 
-namespace GoL.Infrastructure
+namespace GoLife.Infrastructure
 {
     public class Direct2D1App : Direct3D11App
     {

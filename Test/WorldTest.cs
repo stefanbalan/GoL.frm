@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GoL.Test
+namespace GoLife.Test
 {
     //[TestClass]
     public class WorldTest

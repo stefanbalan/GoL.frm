@@ -4,9 +4,9 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SharpDX;
-using Configuration = GoL.Infrastructure.Configuration;
+using Configuration = GoLife.Infrastructure.Configuration;
 
-namespace GoL
+namespace GoLife
 {
     public partial class StartForm : Form
     {
@@ -27,6 +27,7 @@ namespace GoL
             txtBorn.Text = _app.Configuration.BornColor.ToAbgr().ToString("X8");
             txtDead.Text = _app.Configuration.DeadColor.ToAbgr().ToString("X8");
             txtDelay.Text = _app.Configuration.TargetMs.ToString("D");
+            trkDelay.Value = 4;
 
             if (Directory.Exists("patterns"))
             {
@@ -52,6 +53,17 @@ namespace GoL
             {
                 _game.Stop = true;
                 btnStartStop.Text = @"Start";
+            }
+        }
+        private void btnStep_Click(object sender, EventArgs e)
+        {
+            _game.Stop = true;
+            btnStartStop.Text = @"Start";
+
+            if (_gameTask?.Status != TaskStatus.Running)
+            {
+                _gameTask = new Task(_game.Run);
+                _gameTask.Start();
             }
         }
 
@@ -117,6 +129,23 @@ namespace GoL
 
             txtDelay.Text = _app.Configuration.TargetMs.ToString();
         }
+
+        private void trkDelay_Scroll(object sender, EventArgs e)
+        {
+            var delay = 0;
+            switch (trkDelay.Value)
+            {
+                case 1: delay = 0; break;
+                case 2: delay = 50; break;
+                case 3: delay = 100; break;
+                case 4: delay = 200; break;
+                case 5: delay = 1000; break;
+            }
+            _app.Configuration.TargetMs = delay;
+
+            txtDelay.Text = _app.Configuration.TargetMs.ToString();
+        }
+
         private void chkHighlight_CheckedChanged(object sender, EventArgs e)
         {
             _game.HighlightChanges = chkHighlight.Checked;
@@ -125,19 +154,30 @@ namespace GoL
 
         #endregion
 
-        private void lstPatterns_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void lstPatterns_DoubleClick(object sender, EventArgs e)
         {
-            var sr = ((FileInfo) ((ListBox) sender).SelectedItem).OpenText();
+            LoadPattern();
+        }
+
+        private void btnLoadPattern_Click(object sender, EventArgs e)
+        {
+            LoadPattern();
+        }
+
+        private void LoadPattern()
+        {
+            if (lstPatterns.SelectedItem == null) return;
+            var sr = ((FileInfo)lstPatterns.SelectedItem).OpenText();
             var world = CellWorld.FromRLE(sr);
             _game.Initialize(new Generation<CellWorld>
             {
                 Live = world
-        });
+            });
         }
-}
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            stsLabelAverageTime.Text = $@"{_game.AverageTimeMs}ms";
+        }
+    }
 }

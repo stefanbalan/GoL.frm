@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace GoL
+namespace GoLife
 {
     static class Program
     {

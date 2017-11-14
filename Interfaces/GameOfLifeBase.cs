@@ -1,8 +1,9 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
 
-namespace GoL
+namespace GoLife
 {
 
 
@@ -54,7 +55,9 @@ namespace GoL
         #endregion
 
 
-        public long TargetTimeMs { get; set; }
+        public int TargetTimeMs { get; set; }
+        public int AverageTimeMs { get; private set; }
+
         public bool Stop { get; set; }
 
         public void Run()
@@ -68,25 +71,33 @@ namespace GoL
                     .Remove(cg.Dead);
                 ng = new Generation<TWorld>();
                 nextGeneration = ng.Live;
+                try
+                {
+                    ComputeNextGeneration();
+                }
+                catch (Exception ex)
+                {
 
-                ComputeNextGeneration();
-
+                }
                 _iterations.Enqueue(ng);
                 cg = ng;
-
                 sw.Stop();
-                if (sw.ElapsedMilliseconds < TargetTimeMs)
-                    Thread.Sleep((int)(TargetTimeMs - sw.ElapsedMilliseconds));
+
+                var ms = sw.ElapsedMilliseconds;
+                Debug.WriteLine($"ComputeNextGeneration: {ms}ms");
+                if (ms < TargetTimeMs)
+                    Thread.Sleep((int)(TargetTimeMs - ms));
                 if (_iterations.Count > 8)
                 {
-                    Debug.WriteLine($"{_iterations.Count} itterations; sleeping");
-                    Thread.Sleep((int)(TargetTimeMs - sw.ElapsedMilliseconds));
+                    Thread.Sleep((int)(TargetTimeMs - ms));
                 }
                 sw.Reset();
+                AverageTimeMs = (int) ((AverageTimeMs * 7 + ms) / 8);
 
             } while (!Stop);
         }
-        
+
+
         public Generation<TWorld> TryGetNext()
         {
             return _iterations.TryDequeue(out var result)

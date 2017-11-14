@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using GoL.Infrastructure;
+using GoLife.Infrastructure;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
-using Configuration = GoL.Infrastructure.Configuration;
+using Configuration = GoLife.Infrastructure.Configuration;
 
-namespace GoL
+namespace GoLife
 {
     public class GameOfLifeApp :
         Direct2D1App
@@ -22,12 +22,12 @@ namespace GoL
         private Generation<CellWorld> current;
         private readonly GameOfLifeBase<CellWorld> game;
 
-        public GameOfLifeApp(Configuration configuration, GameOfLifeBase<CellWorld> game) : base(configuration)
+        public GameOfLifeApp(Infrastructure.Configuration configuration, GameOfLifeBase<CellWorld> game) : base(configuration)
         {
             this.game = game;
         }
 
-        protected override void Initialize(Configuration configuration)
+        protected override void Initialize(Infrastructure.Configuration configuration)
         {
             base.Initialize(configuration);
             configuration.OnChange += UpdateConfiguration;
