@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameImpl\GameOfLife.cs" />
     <Compile Include="GameOfLife.cs" />
     <Compile Include="GameImpl\GameOfLifeOpt.cs" />
     <Compile Include="GameImpl\GameOfLifeTemplate.cs" />
@@ -118,23 +119,30 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Patterns\01 DT logo ext.rle">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Patterns\02 Intelligence.rle">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Patterns\10 Spaceship factory.rle">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Patterns\11 Mothership.rle">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Patterns\12 Track laying machine.rle">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Patterns\13 Track laying zigzag.rle">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Patterns\01 DT logo.rle" />
-    <None Include="Patterns\01 Intelligence logo.rle" />
+    <None Include="Patterns\01 DT logo.rle">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Patterns\01 Intelligence logo.rle">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

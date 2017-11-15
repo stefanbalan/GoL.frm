@@ -49,7 +49,7 @@ namespace GoLife
         #region Game
         //public abstract bool IsAlive(int i, int cellPositionX);
 
-        public abstract int GetNumberOfNeighbours(int i, int cellPositionX);
+        public abstract int GetNumberOfAliveNeighbours(int i, int cellPositionX);
 
         public abstract void ComputeNextGeneration();
         #endregion

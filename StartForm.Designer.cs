@@ -62,9 +62,9 @@
             // 
             // btnStartStop
             // 
-            this.btnStartStop.Location = new System.Drawing.Point(231, 12);
+            this.btnStartStop.Location = new System.Drawing.Point(12, 12);
             this.btnStartStop.Name = "btnStartStop";
-            this.btnStartStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStartStop.Size = new System.Drawing.Size(100, 23);
             this.btnStartStop.TabIndex = 0;
             this.btnStartStop.Text = "Start/Stop";
             this.btnStartStop.UseVisualStyleBackColor = true;
@@ -148,7 +148,7 @@
             this.groupBox1.Controls.Add(this.txtLive);
             this.groupBox1.Controls.Add(this.txtBorn);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(12, 148);
+            this.groupBox1.Location = new System.Drawing.Point(12, 177);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(213, 132);
             this.groupBox1.TabIndex = 13;
@@ -180,6 +180,7 @@
             this.chkHighlight.TabIndex = 16;
             this.chkHighlight.Text = "Highlight changes";
             this.chkHighlight.UseVisualStyleBackColor = true;
+            this.chkHighlight.Visible = false;
             this.chkHighlight.CheckedChanged += new System.EventHandler(this.chkHighlight_CheckedChanged);
             // 
             // groupBox2
@@ -188,7 +189,7 @@
             this.groupBox2.Controls.Add(this.trkDelay);
             this.groupBox2.Controls.Add(this.chkHighlight);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Location = new System.Drawing.Point(12, 41);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(213, 130);
             this.groupBox2.TabIndex = 14;
@@ -214,9 +215,9 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox3.Controls.Add(this.lstPatterns);
             this.groupBox3.Controls.Add(this.btnLoadPattern);
-            this.groupBox3.Location = new System.Drawing.Point(12, 286);
+            this.groupBox3.Location = new System.Drawing.Point(12, 315);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(213, 220);
+            this.groupBox3.Size = new System.Drawing.Size(213, 218);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Patterns";
@@ -228,7 +229,7 @@
             this.lstPatterns.FormattingEnabled = true;
             this.lstPatterns.Location = new System.Drawing.Point(6, 48);
             this.lstPatterns.Name = "lstPatterns";
-            this.lstPatterns.Size = new System.Drawing.Size(201, 147);
+            this.lstPatterns.Size = new System.Drawing.Size(201, 160);
             this.lstPatterns.TabIndex = 2;
             this.lstPatterns.DoubleClick += new System.EventHandler(this.lstPatterns_DoubleClick);
             // 
@@ -246,9 +247,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stsLabelAverageTime});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 528);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 536);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(434, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(248, 22);
             this.statusStrip1.TabIndex = 16;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -260,9 +261,9 @@
             // 
             // btnStep
             // 
-            this.btnStep.Location = new System.Drawing.Point(312, 12);
+            this.btnStep.Location = new System.Drawing.Point(125, 12);
             this.btnStep.Name = "btnStep";
-            this.btnStep.Size = new System.Drawing.Size(75, 23);
+            this.btnStep.Size = new System.Drawing.Size(100, 23);
             this.btnStep.TabIndex = 17;
             this.btnStep.Text = "Step";
             this.btnStep.UseVisualStyleBackColor = true;
@@ -278,7 +279,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 550);
+            this.ClientSize = new System.Drawing.Size(248, 558);
             this.Controls.Add(this.btnStep);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox3);

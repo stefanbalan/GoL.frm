@@ -2,7 +2,7 @@
 {
     public class GameOfLifeOpt : GameOfLifeBase<CellWorld>
     {
-        public override int GetNumberOfNeighbours(int x, int y)
+        public override int GetNumberOfAliveNeighbours(int x, int y)
         {
             var neighbours = 0;
 
@@ -27,7 +27,7 @@
                     {
                         for (var column = cell.X - 1; column <= cell.X + 1; column++)
                         {
-                            var numberOfNeighbours = GetNumberOfNeighbours(column, row);
+                            var numberOfNeighbours = GetNumberOfAliveNeighbours(column, row);
                             if (!currentGeneration[column, row] && numberOfNeighbours == 3)
                                 ng.Born[column, row] = true;
 
@@ -46,7 +46,7 @@
                     {
                         for (var column = cell.X - 1; column <= cell.X + 1; column++)
                         {
-                            var numberOfNeighbours = GetNumberOfNeighbours(column, row);
+                            var numberOfNeighbours = GetNumberOfAliveNeighbours(column, row);
                             if (!currentGeneration[column, row] && numberOfNeighbours == 3)
                                 nextGeneration[column, row] = true;
 

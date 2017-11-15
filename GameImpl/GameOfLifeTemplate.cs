@@ -4,7 +4,7 @@
     {
         // currentGeneration [ row, column ] == Alive => nextGeneration[ row, column ] == Alive/Dead?
 
-        public override int GetNumberOfNeighbours(int row, int column)
+        public override int GetNumberOfAliveNeighbours(int row, int column)
         {
             // row-1,column-1  row-1,column  row-1,column+1
             //   row,column-1    row,column    row,column+1
