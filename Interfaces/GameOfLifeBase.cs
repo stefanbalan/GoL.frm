@@ -18,6 +18,7 @@ namespace GoLife
         protected Generation<TWorld> ng;
 
         public bool HighlightChanges { get; set; }
+        public bool StartFromPrevious { get; set; }
 
 
         protected GameOfLifeBase()
@@ -69,8 +70,12 @@ namespace GoLife
                 currentGeneration = (TWorld)((CellWorld)cg.Live.Clone())
                     .Add(cg.Born)
                     .Remove(cg.Dead);
-                ng = new Generation<TWorld>();
+                ng = new Generation<TWorld>
+                {
+                    Live = StartFromPrevious ? (TWorld)currentGeneration.Clone() : new TWorld()
+                };
                 nextGeneration = ng.Live;
+
                 try
                 {
                     ComputeNextGeneration();
@@ -92,7 +97,7 @@ namespace GoLife
                     Thread.Sleep((int)(TargetTimeMs - ms));
                 }
                 sw.Reset();
-                AverageTimeMs = (int) ((AverageTimeMs * 7 + ms) / 8);
+                AverageTimeMs = (int)((AverageTimeMs * 7 + ms) / 8);
 
             } while (!Stop);
         }

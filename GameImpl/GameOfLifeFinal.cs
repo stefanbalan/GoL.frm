@@ -1,6 +1,6 @@
 ﻿namespace GoLife
 {
-    public class GameOfLife : GameOfLifeBase<CellWorld>
+    public class GameOfLifeFinal : GameOfLifeBase<CellWorld>
     {
         // currentGeneration [ row, column ] == Alive => nextGeneration[ row, column ] == Alive/Dead?
 

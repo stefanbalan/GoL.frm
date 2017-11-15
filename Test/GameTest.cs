@@ -10,7 +10,7 @@ namespace GoLife.Test
         [TestInitialize]
         public void Prepare()
         {
-            game = new GameOfLifeOpt();
+            game = new GameOfLife();
             var w = new CellWorld
             {
                 [-10, -10] = true,
@@ -78,9 +78,10 @@ namespace GoLife.Test
             var aliveat_10_10 = game.GetCellAt(-10, -10); //0
             var aliveat_22_2 = game.GetCellAt(22, 2); // //1
 
-            Assert.IsTrue(aliveat_10_10 ); //0
-            Assert.IsTrue(aliveat_22_2  ); // //1
+            Assert.IsTrue(aliveat_10_10); //0
+            Assert.IsTrue(aliveat_22_2); // //1
 
+            game.StartFromPrevious = true;
             game.Stop = true;
             game.Run();
 
@@ -115,6 +116,8 @@ namespace GoLife.Test
             Assert.IsTrue(aliveat_41_2); // 7
             Assert.IsTrue(aliveat_11_2); // 8
 
+
+            game.StartFromPrevious = true;
             game.Stop = true;
             game.Run();
 

@@ -1,6 +1,6 @@
 ﻿namespace GoLife
 {
-    public class GameOfLifeFinal : GameOfLifeBase<CellWorld>
+    public class GameOfLife : GameOfLifeBase<CellWorld>
     {
         // currentGeneration [ row, column ] == Alive => nextGeneration[ row, column ] == Alive/Dead?
 
@@ -31,15 +31,19 @@
             // currentGeneration ( StartRow, StartColumn )
             // currentGeneration ( EndRow, EndColumn )
 
-            for (int row = currentGeneration.StartRow; row < currentGeneration.EndRow; row++)
+
+            //for every row from the minimum value to the maximum, increase row
+            for (int row = 0; row < 1; row++)
             {
-                for (int column = currentGeneration.StartColumn; column < currentGeneration.EndColumn; column++)
+                // every column from the minimum value to the maximum increase column
+                for (int column = 0; column < 1; column++)
                 {
+
                     // apply the rules to compute nextGeneration
 
                     // RULE: if the cell at row and column is Alive and NumberOfNeighbours for cell at row and column  is smaller than 2 
                     // nextGeneration at row and column becomes Dead
-                    
+
 
 
                     // RULE: if the cell at row and column is Alive and 
@@ -47,17 +51,15 @@
                     //    NumberOfNeighbours for cell at row and column is equal to 3
                     // nextGeneration at row and column stays ALive
 
-                    
+
 
                     // RULE: if the cell at row and column is Alive and NumberOfNeighbours for cell at row and column  is greater than 3
                     // nextGeneration at row and column becomes Dead
 
 
-                    
+
                     // RULE: if the cell at row and column is Dead and NumberOfNeighbours for cell at row and column is equal to 3
                     // nextGeneration at row and column becomes Alive
-                    
-
                 }
             }
         }

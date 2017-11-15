@@ -78,7 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameImpl\GameOfLife.cs" />
+    <Compile Include="GameImpl\GameOfLifeFinal.cs" />
     <Compile Include="GameOfLife.cs" />
     <Compile Include="GameImpl\GameOfLifeOpt.cs" />
     <Compile Include="GameImpl\GameOfLifeTemplate.cs" />
