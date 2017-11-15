@@ -33,9 +33,9 @@ namespace GoLife
             configuration.OnChange += UpdateConfiguration;
             UpdateConfiguration();
 
-            current = new Generation<CellWorld> { Live = GetTestInitialMap() };
-            //current = new Generation<CellWorld> { Live = GetTestInitialLargeMap() };
-            game.Initialize(current);
+            //current = new Generation<CellWorld> { Live = GetTestInitialMap() };
+            ////current = new Generation<CellWorld> { Live = GetTestInitialLargeMap() };
+            //game.Initialize(current);
         }
 
         private CellWorld GetTestInitialMap()

@@ -17,7 +17,7 @@ namespace GoLife
         public StartForm()
         {
             InitializeComponent();
-            _game = new GameOfLifeOpt();
+            _game = new GameOfLife();
             //_game = new GameOfLifeTemplate();
 
             _app = new GameOfLifeApp(new Configuration(), _game);
