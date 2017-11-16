@@ -119,12 +119,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
-    <None Include="Patterns\01 DT logo ext.rle">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Patterns\02 Intelligence.rle">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Patterns\01 DT logo ext.rle" />
+    <None Include="Patterns\02 Intelligence.rle" />
     <None Include="Patterns\10 Spaceship factory.rle">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -137,12 +133,8 @@
     <None Include="Patterns\13 Track laying zigzag.rle">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Patterns\01 DT logo.rle">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Patterns\01 Intelligence logo.rle">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Patterns\01 DT logo.rle" />
+    <None Include="Patterns\01 Intelligence logo.rle" />
     <None Include="Patterns\21 rake-factory.rle">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

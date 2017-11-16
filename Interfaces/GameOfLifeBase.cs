@@ -68,7 +68,7 @@ namespace GoLife
             do
             {
                 sw.Start();
-                currentGeneration = (cg == null) ? new TWorld() : (TWorld)((CellWorld)cg.Live.Clone())
+                currentGeneration = cg?.Live == null ? new TWorld() : (TWorld)((CellWorld)cg.Live.Clone())
                     .Add(cg.Born)
                     .Remove(cg.Dead);
                 ng = new Generation<TWorld>
