@@ -58,7 +58,7 @@ namespace GoLife
 
         public int TargetTimeMs { get; set; }
         public int AverageTimeMs { get; private set; }
-        public TWorld CurrentGeneration => (TWorld) currentGeneration?.Clone();
+        public TWorld CurrentGeneration => (TWorld)currentGeneration?.Clone();
 
         public bool Stop { get; set; }
 
@@ -68,7 +68,7 @@ namespace GoLife
             do
             {
                 sw.Start();
-                currentGeneration = (TWorld)((CellWorld)cg.Live.Clone())
+                currentGeneration = (cg == null) ? new TWorld() : (TWorld)((CellWorld)cg.Live.Clone())
                     .Add(cg.Born)
                     .Remove(cg.Dead);
                 ng = new Generation<TWorld>
@@ -95,7 +95,7 @@ namespace GoLife
                     Thread.Sleep((int)(TargetTimeMs - ms));
                 if (_iterations.Count > 8)
                 {
-                    Thread.Sleep((int)(TargetTimeMs - ms));
+                    Thread.Sleep((int)(7 * ms));
                 }
                 sw.Reset();
                 AverageTimeMs = (int)((AverageTimeMs * 7 + ms) / 8);
