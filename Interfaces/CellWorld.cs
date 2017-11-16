@@ -18,6 +18,7 @@ namespace GoLife
     {
         internal int _version;
         private readonly SortedList<int, SortedList<int, ulong>> _rows;
+        private object _sync = new object();
 
         public CellWorld()
         {
@@ -62,14 +63,30 @@ namespace GoLife
             set
             {
                 SetInterval(x, y);
-                var rowIndex = _rows.IndexOfKey(y);
-                SortedList<int, ulong> row;
-                if (rowIndex < 0)
+                SortedList<int, ulong> row = null;
+                int rowIndex;
+
+
+                lock (_sync)
                 {
-                    row = new SortedList<int, ulong>();
-                    _rows.Add(y, row);
+
+
+                    rowIndex = _rows.IndexOfKey(y);
+                    try
+                    {
+                        if (rowIndex < 0)
+                        {
+                            row = new SortedList<int, ulong>();
+                            _rows.Add(y, row);
+                        }
+                        else row = _rows.Values[rowIndex];
+
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
                 }
-                else row = _rows.Values[rowIndex];
 
                 var memIndex = x >> 6;
                 var colIndex = row.IndexOfKey(memIndex);

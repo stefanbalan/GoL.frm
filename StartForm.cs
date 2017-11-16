@@ -11,14 +11,13 @@ namespace GoLife
     public partial class StartForm : Form
     {
         private readonly GameOfLifeApp _app;
-        private readonly GameOfLifeBase<CellWorld> _game;
+        private GameOfLifeBase<CellWorld> _game;
         private Task _gameTask;
 
         public StartForm()
         {
             InitializeComponent();
             _game = new GameOfLife();
-            //_game = new GameOfLifeTemplate();
 
             _app = new GameOfLifeApp(new Configuration(), _game);
 
@@ -44,17 +43,29 @@ namespace GoLife
         {
             if (_gameTask?.Status != TaskStatus.Running)
             {
-                _game.Stop = false;
-                _gameTask = new Task(_game.Run);
-                _gameTask.Start();
-                btnStartStop.Text = @"Stop";
+                StartGame();
             }
             else
             {
-                _game.Stop = true;
-                btnStartStop.Text = @"Start";
+                StopGame();
             }
         }
+
+        private void StopGame()
+        {
+            _game.Stop = true;
+            btnStartStop.Text = @"Start";
+            if (_gameTask != null && _gameTask.Status == TaskStatus.Running) _gameTask.Wait(2000);
+        }
+
+        private void StartGame()
+        {
+            _game.Stop = false;
+            _gameTask = new Task(_game.Run);
+            _gameTask.Start();
+            btnStartStop.Text = @"Stop";
+        }
+
         private void btnStep_Click(object sender, EventArgs e)
         {
             _game.Stop = true;
@@ -151,7 +162,24 @@ namespace GoLife
             _game.HighlightChanges = chkHighlight.Checked;
         }
 
+        private void chkDemo_CheckedChanged(object sender, EventArgs e)
+        {
+            var newGame = chkDemo.Checked ? (GameOfLifeBase<CellWorld>)new GameOfLifeOpt() : new GameOfLife();
+            var stopped = _game.Stop;
 
+            _game.Stop = true;
+            _gameTask?.Wait(2000);
+
+            newGame.Initialize(new Generation<CellWorld> { Live = _game.CurrentGeneration });
+
+            _game = newGame;
+            _app.SetGame(_game);
+            _game.Stop = stopped;
+            if (!stopped)
+            {
+                StartGame();
+            }
+        }
         #endregion
 
         private void lstPatterns_DoubleClick(object sender, EventArgs e)
@@ -169,15 +197,19 @@ namespace GoLife
             if (lstPatterns.SelectedItem == null) return;
             var sr = ((FileInfo)lstPatterns.SelectedItem).OpenText();
             var world = CellWorld.FromRLE(sr);
+            StopGame();
             _game.Initialize(new Generation<CellWorld>
             {
                 Live = world
             });
+            StartGame();
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
             stsLabelAverageTime.Text = $@"{_game.AverageTimeMs}ms";
         }
+
+
     }
 }

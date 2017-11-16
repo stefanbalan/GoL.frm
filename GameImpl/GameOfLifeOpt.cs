@@ -1,4 +1,6 @@
-﻿namespace GoLife
+﻿using System;
+
+namespace GoLife
 {
     public class GameOfLifeOpt : GameOfLifeBase<CellWorld>
     {
@@ -46,15 +48,24 @@
                     {
                         for (var column = cell.X - 1; column <= cell.X + 1; column++)
                         {
-                            var numberOfNeighbours = GetNumberOfAliveNeighbours(column, row);
-                            if (!currentGeneration[column, row] && numberOfNeighbours == 3)
-                                nextGeneration[column, row] = true;
+                            try
+                            {
+                                var numberOfNeighbours = GetNumberOfAliveNeighbours(column, row);
+                                if (!currentGeneration[column, row] && numberOfNeighbours == 3)
+                                    nextGeneration[column, row] = true;
 
-                            if (currentGeneration[column, row] && (numberOfNeighbours == 2 || numberOfNeighbours == 3))
-                                nextGeneration[column, row] = true;
+                                if (currentGeneration[column, row] &&
+                                    (numberOfNeighbours == 2 || numberOfNeighbours == 3))
+                                    nextGeneration[column, row] = true;
 
-                            if (currentGeneration[column, row] && (numberOfNeighbours < 2 || numberOfNeighbours > 3))
-                                nextGeneration[column, row] = false;
+                                if (currentGeneration[column, row] &&
+                                    (numberOfNeighbours < 2 || numberOfNeighbours > 3))
+                                    nextGeneration[column, row] = false;
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
                         }
                     }
                 }

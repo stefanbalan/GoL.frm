@@ -58,6 +58,7 @@ namespace GoLife
 
         public int TargetTimeMs { get; set; }
         public int AverageTimeMs { get; private set; }
+        public TWorld CurrentGeneration => (TWorld) currentGeneration?.Clone();
 
         public bool Stop { get; set; }
 

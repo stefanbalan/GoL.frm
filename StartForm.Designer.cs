@@ -45,6 +45,7 @@
             this.txtDelay = new System.Windows.Forms.TextBox();
             this.chkHighlight = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkDemo = new System.Windows.Forms.CheckBox();
             this.trkDelay = new System.Windows.Forms.TrackBar();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lstPatterns = new System.Windows.Forms.ListBox();
@@ -174,17 +175,17 @@
             // chkHighlight
             // 
             this.chkHighlight.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkHighlight.Location = new System.Drawing.Point(35, 104);
+            this.chkHighlight.Location = new System.Drawing.Point(9, 104);
             this.chkHighlight.Name = "chkHighlight";
-            this.chkHighlight.Size = new System.Drawing.Size(172, 20);
+            this.chkHighlight.Size = new System.Drawing.Size(114, 20);
             this.chkHighlight.TabIndex = 16;
             this.chkHighlight.Text = "Highlight changes";
             this.chkHighlight.UseVisualStyleBackColor = true;
-            this.chkHighlight.Visible = false;
             this.chkHighlight.CheckedChanged += new System.EventHandler(this.chkHighlight_CheckedChanged);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkDemo);
             this.groupBox2.Controls.Add(this.txtDelay);
             this.groupBox2.Controls.Add(this.trkDelay);
             this.groupBox2.Controls.Add(this.chkHighlight);
@@ -195,6 +196,17 @@
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Options";
+            // 
+            // chkDemo
+            // 
+            this.chkDemo.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkDemo.Location = new System.Drawing.Point(149, 104);
+            this.chkDemo.Name = "chkDemo";
+            this.chkDemo.Size = new System.Drawing.Size(58, 20);
+            this.chkDemo.TabIndex = 18;
+            this.chkDemo.Text = "Demo";
+            this.chkDemo.UseVisualStyleBackColor = true;
+            this.chkDemo.CheckedChanged += new System.EventHandler(this.chkDemo_CheckedChanged);
             // 
             // trkDelay
             // 
@@ -327,6 +339,7 @@
         private System.Windows.Forms.TrackBar trkDelay;
         private System.Windows.Forms.Button btnStep;
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.CheckBox chkDemo;
     }
 }
 

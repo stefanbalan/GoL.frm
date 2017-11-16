@@ -20,13 +20,18 @@ namespace GoLife
         private readonly int _cellCornerRadius = 2;
 
         private Generation<CellWorld> current;
-        private readonly GameOfLifeBase<CellWorld> game;
+        private GameOfLifeBase<CellWorld> game;
 
-        public GameOfLifeApp(Infrastructure.Configuration configuration, GameOfLifeBase<CellWorld> game) : base(configuration)
+        public GameOfLifeApp(Configuration configuration, GameOfLifeBase<CellWorld> game) : base(configuration)
         {
             this.game = game;
         }
 
+        public void SetGame(GameOfLifeBase<CellWorld> game)
+        {
+            this.game = game;
+            UpdateConfiguration();
+        }
         protected override void Initialize(Infrastructure.Configuration configuration)
         {
             base.Initialize(configuration);
