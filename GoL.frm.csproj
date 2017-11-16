@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameImpl\GameOfLifeFinal.cs" />
+    <Compile Include="GameOfLifeP.cs" />
     <Compile Include="GameOfLife.cs" />
     <Compile Include="GameImpl\GameOfLifeOpt.cs" />
     <Compile Include="GameImpl\GameOfLifeTemplate.cs" />
@@ -121,6 +122,9 @@
     <None Include="packages.config" />
     <None Include="Patterns\01 DT logo ext.rle" />
     <None Include="Patterns\02 Intelligence.rle" />
+    <None Include="Patterns\00 empty.rle">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Patterns\10 Spaceship factory.rle">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

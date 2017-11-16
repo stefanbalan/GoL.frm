@@ -1,0 +1,8 @@
+#C p690 gun for a 2c/5 spaceship.
+#C Based on a glider synthesis primarily by Noam Elkies.
+#C Jason Summers, 28 Oct 03
+#C (Note: The first gun for this spaceship was built by
+#C  Dave Greene in April 2003 -- see 2c5-spaceship-gun-p416.rle.
+#C  This one was constructed independently.)
+x = 2, y = 2, rule = B3/S23
+2$
