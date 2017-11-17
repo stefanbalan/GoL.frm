@@ -38,9 +38,54 @@ namespace GoLife
             configuration.OnChange += UpdateConfiguration;
             UpdateConfiguration();
 
-            //current = new Generation<CellWorld> { Live = GetTestInitialMap() };
-            ////current = new Generation<CellWorld> { Live = GetTestInitialLargeMap() };
-            //game.Initialize(current);
+            current = new Generation<CellWorld> { Live = GetTestMap() };
+            //current = new Generation<CellWorld> { Live = GetTestInitialLargeMap() };
+            game.Initialize(current);
+        }
+
+        private CellWorld GetTestMap()
+        {
+            var _testMap = new CellWorld
+            {
+                [0, 0] = true,
+                [0, 1] = true,
+                [1, 0] = true,
+                [1, 1] = true,
+
+                [10, 1] = true,
+                [10, 2] = true,
+                [10, 3] = true,
+                [11, 1] = true,
+                [11, 2] = true,
+                [11, 3] = true,
+                [12, 1] = true,
+                [12, 2] = true,
+                [12, 3] = true,
+
+                [20, 1] = true,
+                [20, 2] = true,
+                [20, 3] = true,
+                [21, 2] = true,
+                [22, 2] = true,
+
+                [30, 1] = true,
+                [30, 2] = true,
+                [30, 3] = true,
+                [31, 2] = true,
+                [32, 1] = true,
+                [32, 2] = true,
+                [32, 3] = true,
+
+                [40, 1] = true,
+                [40, 2] = true,
+                [40, 3] = true,
+                [41, 1] = true,
+                [41, 2] = true,
+                [42, 1] = true,
+                [42, 2] = true,
+                [42, 3] = true
+            };
+            return _testMap;
         }
 
         private CellWorld GetTestInitialMap()

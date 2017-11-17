@@ -155,6 +155,9 @@ namespace GoLife.Test
             Assert.IsFalse(game.GetCellAt(31, 2)); // 6
             Assert.IsFalse(game.GetCellAt(41, 2)); // 7
             Assert.IsFalse(game.GetCellAt(11, 2)); // 8
+
+            //check the limit conditions - only applies when using "<= MaxRow" not foreach
+            Assert.IsTrue(game.GetCellAt(43, 2));
         }
     }
 }
